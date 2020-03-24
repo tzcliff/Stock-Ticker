@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttermodule/constants.dart';
 import 'package:fluttermodule/screens/search_stock_screen.dart';
 import 'package:fluttermodule/services/stock_service.dart';
+import 'package:intl/intl.dart';
 
 import 'price_panel.dart';
 
@@ -38,15 +39,18 @@ class _MainScreenState extends State<MainScreen> {
         return;
       }
       try {
+        var formatter = new DateFormat('yyyy-MM-dd');
+        String formattedDate = formatter.format(DateTime.now());
         lastRefreshed = stockData['Meta Data']['3. Last Refreshed'];
         symbol = stockData['Meta Data']['2. Symbol'];
-        open = stockData['Time Series (Daily)'][lastRefreshed]['1. open'];
-        high = stockData['Time Series (Daily)'][lastRefreshed]['2. high'];
-        low = stockData['Time Series (Daily)'][lastRefreshed]['3. low'];
-        close = stockData['Time Series (Daily)'][lastRefreshed]['4. close'];
+        open = stockData['Time Series (Daily)'][formattedDate]['1. open'];
+        high = stockData['Time Series (Daily)'][formattedDate]['2. high'];
+        low = stockData['Time Series (Daily)'][formattedDate]['3. low'];
+        close = stockData['Time Series (Daily)'][formattedDate]['4. close'];
         print(high);
         print(low);
       } catch (e) {
+        print(e);
         symbol = 'Error';
         open = 'Error';
         high = 'Error';
