@@ -42,10 +42,6 @@ class _HomeScreenState extends State<HomeScreen> {
           onPressed: () async {
             var stockSymbol =
                 await Navigator.pushNamed(context, SearchStockScreen.id);
-            // if (stockSymbol != null) {
-            //   print(stockSymbol);
-            //   var stockData = await stockService.getStockBySymbol(stockSymbol);
-            // }
           },
           child: Icon(Icons.search),
           elevation: 4.0,

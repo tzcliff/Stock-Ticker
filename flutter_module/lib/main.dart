@@ -6,21 +6,20 @@ import 'package:fluttermodule/screens/model_screen.dart';
 import 'package:fluttermodule/screens/registration_screen.dart';
 import 'package:fluttermodule/screens/search_stock_screen.dart';
 import 'package:fluttermodule/screens/watchlist_screen.dart';
-import 'screens/stock_info_screen.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:fluttermodule/screens/welcome_screen.dart';
 
 void main() {
   runApp(MaterialApp(
-    home: HomeScreen(),
+    home: WelcomeScreen(),
     theme: ThemeData.dark(),
-    initialRoute: HomeScreen.id,
+    initialRoute: WelcomeScreen.id,
     routes: {
       LoginScreen.id: (context) => LoginScreen(),
       MarketScreen.id: (context) => MarketScreen(),
       ModelScreen.id: (context) => ModelScreen(),
       RegistrationScreen.id: (context) => RegistrationScreen(),
       SearchStockScreen.id: (context) => SearchStockScreen(),
-      StockInfoScreen.id: (context) => StockInfoScreen(),
+      WelcomeScreen.id: (context) => WelcomeScreen(),
       WatchlistScreen.id: (context) => WatchlistScreen(),
       HomeScreen.id: (context) => HomeScreen(),
     },

@@ -5,17 +5,17 @@ class PricePanel extends StatelessWidget {
   const PricePanel({
     Key key,
     @required this.symbol,
-    @required this.lastRefreshed,
-    @required this.open,
-    @required this.close,
+    @required this.lastTradingDay,
+    @required this.price,
+    @required this.change,
     @required this.high,
     @required this.low,
   }) : super(key: key);
 
   final symbol;
-  final lastRefreshed;
-  final open;
-  final close;
+  final lastTradingDay;
+  final price;
+  final change;
   final high;
   final low;
 
@@ -42,7 +42,7 @@ class PricePanel extends StatelessWidget {
         ),
         Expanded(
           child: Text(
-            '$lastRefreshed',
+            '$lastTradingDay',
             style: kPriceTextStyle,
           ),
         ),
@@ -51,11 +51,11 @@ class PricePanel extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               Text(
-                'open: $open',
+                'price: $price',
                 style: kPriceTextStyle,
               ),
               Text(
-                'close: $close',
+                'change: $change%',
                 style: kPriceTextStyle,
               ),
             ],
