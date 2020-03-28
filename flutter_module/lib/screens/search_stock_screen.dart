@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttermodule/constants.dart';
 
 class SearchStockScreen extends StatefulWidget {
+  static String id = 'search_stock_screen';
   @override
   _SearchStockScreenState createState() => _SearchStockScreenState();
 }

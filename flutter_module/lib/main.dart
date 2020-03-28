@@ -1,45 +1,61 @@
 import 'package:flutter/material.dart';
-import 'screens/main_screen.dart';
-import 'services/stock_service.dart';
+import 'package:fluttermodule/screens/home_screen.dart';
+import 'package:fluttermodule/screens/login_screen.dart';
+import 'package:fluttermodule/screens/martket_screen.dart';
+import 'package:fluttermodule/screens/model_screen.dart';
+import 'package:fluttermodule/screens/registration_screen.dart';
+import 'package:fluttermodule/screens/search_stock_screen.dart';
+import 'package:fluttermodule/screens/watchlist_screen.dart';
+import 'screens/stock_info_screen.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 void main() {
   runApp(MaterialApp(
-    home: StockTicker(),
+    home: HomeScreen(),
     theme: ThemeData.dark(),
+    initialRoute: HomeScreen.id,
+    routes: {
+      LoginScreen.id: (context) => LoginScreen(),
+      MarketScreen.id: (context) => MarketScreen(),
+      ModelScreen.id: (context) => ModelScreen(),
+      RegistrationScreen.id: (context) => RegistrationScreen(),
+      SearchStockScreen.id: (context) => SearchStockScreen(),
+      StockInfoScreen.id: (context) => StockInfoScreen(),
+      WatchlistScreen.id: (context) => WatchlistScreen(),
+      HomeScreen.id: (context) => HomeScreen(),
+    },
   ));
 }
 
-class StockTicker extends StatefulWidget {
-  @override
-  _StockTickerState createState() => _StockTickerState();
-}
+// class StockTicker extends StatefulWidget {
+//   @override
+//   _StockTickerState createState() => _StockTickerState();
+// }
 
-class _StockTickerState extends State<StockTicker> {
-  var stockData;
-  void getStockInfo() async {
-    StockService stockService = StockService();
-    this.stockData = await stockService.getStockBySymbol('FB');
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return MainScreen(stockData: this.stockData);
-    }));
-  }
+// class _StockTickerState extends State<StockTicker> {
+//   var stockData;
+//   // void getStockInfo() async {
+//   //   StockService stockService = StockService();
+//   //   this.stockData = await stockService.getStockBySymbol('FB');
+//   //   Navigator.push(context, MaterialPageRoute(builder: (context) {
+//   //     return StockInfoScreen(stockData: this.stockData);
+//   //   }));
+//   // }
 
-  @override
-  void initState() {
-    getStockInfo();
-    super.initState();
-  }
+//   @override
+//   void initState() {
+//     super.initState();
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: SpinKitWave(
-          color: Colors.white,
-          size: 100,
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Center(
+//         child: SpinKitWave(
+//           color: Colors.white,
+//           size: 100,
+//         ),
+//       ),
+//     );
+//   }
+// }
