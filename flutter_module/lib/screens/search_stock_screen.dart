@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:fluttermodule/constants.dart';
+import 'package:fluttermodule/screens/stock_info_screen.dart';
+import 'package:fluttermodule/services/stock_service.dart';
 
 class SearchStockScreen extends StatefulWidget {
   static String id = 'search_stock_screen';
@@ -10,6 +12,7 @@ class SearchStockScreen extends StatefulWidget {
 
 class _SearchStockScreenState extends State<SearchStockScreen> {
   String stockSymbol;
+  StockService stockService = StockService();
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +44,18 @@ class _SearchStockScreenState extends State<SearchStockScreen> {
                 ),
               ),
               FlatButton(
-                onPressed: () {
-                  Navigator.pop(context, stockSymbol);
+                onPressed: () async {
+                  if (stockSymbol != null) {
+                    print(stockSymbol);
+                    var stockData =
+                        await stockService.getStockBySymbol(stockSymbol);
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) {
+                      return StockInfoScreen(
+                        stockData: stockData,
+                      );
+                    }));
+                  }
                 },
                 child: Text(
                   'Get Stock',
