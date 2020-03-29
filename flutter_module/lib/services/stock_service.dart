@@ -1,5 +1,5 @@
 import 'network_service.dart';
-import 'package:fluttermodule/constants.dart';
+import 'package:fluttermodule/api_keys.dart';
 
 const String alphaStockApiURL = 'https://www.alphavantage.co/query';
 

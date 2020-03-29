@@ -4,6 +4,8 @@
 .packages
 .pub/
 
+
+./lib/api_keys.dart
 .idea/
 .vagrant/
 .sconsign.dblite
