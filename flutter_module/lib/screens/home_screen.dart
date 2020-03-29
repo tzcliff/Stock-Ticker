@@ -79,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
         onTap: onBottomItemTapped,
         fixedColor: Colors.teal,
       ),
-      body: _pages[selectedIndex],
+      body: SafeArea(child: _pages[selectedIndex]),
     );
   }
 

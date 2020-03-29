@@ -10,9 +10,9 @@ import 'package:fluttermodule/screens/welcome_screen.dart';
 
 void main() {
   runApp(MaterialApp(
-    home: WelcomeScreen(),
+    home: HomeScreen(),
     theme: ThemeData.dark(),
-    initialRoute: WelcomeScreen.id,
+    initialRoute: HomeScreen.id,
     routes: {
       LoginScreen.id: (context) => LoginScreen(),
       MarketScreen.id: (context) => MarketScreen(),
