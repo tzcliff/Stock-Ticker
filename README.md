@@ -8,3 +8,6 @@ Powered by Flutter, Firebase.
 
 Stock API: https://www.alphavantage.co
 
+
+
+To run, paste api_keys.dart to flutter_module/lib
