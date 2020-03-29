@@ -42,3 +42,5 @@ build/
 .ios/
 .flutter-plugins
 .flutter-plugins-dependencies
+
+constants.dart
