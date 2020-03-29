@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:fluttermodule/screens/home_screen.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:fluttermodule/constants.dart';
 import 'package:fluttermodule/components/rounded_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class RegistrationScreen extends StatefulWidget {
   static String id = 'registration_screen';
@@ -12,6 +14,7 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
+  final _auth = FirebaseAuth.instance;
   bool showSpinner = false;
   String email;
   String password;
@@ -40,7 +43,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   keyboardType: TextInputType.emailAddress,
                   textAlign: TextAlign.center,
                   onChanged: (value) {
-                    //Do something with the user input.
                     email = value;
                   },
                   decoration: kTextFieldDecoration.copyWith(
@@ -52,7 +54,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   obscureText: true,
                   textAlign: TextAlign.center,
                   onChanged: (value) {
-                    //Do something with the user input.
                     password = value;
                   },
                   decoration: kTextFieldDecoration.copyWith(
@@ -63,7 +64,21 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               RoundedButton(
                 title: 'Register',
                 color: Colors.tealAccent.shade400,
-                onPressed: () async {},
+                onPressed: () async {
+                  try {
+                    setState(() {
+                      showSpinner = true;
+                    });
+                    final newUser = await _auth.createUserWithEmailAndPassword(
+                        email: email, password: password);
+                    if (newUser != null) {
+                      Navigator.pushReplacementNamed(context, HomeScreen.id);
+                      showSpinner = false;
+                    }
+                  } catch (e) {
+                    print(e);
+                  }
+                },
               )
             ],
           ),

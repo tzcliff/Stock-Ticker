@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttermodule/screens/home_screen.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:fluttermodule/constants.dart';
@@ -11,6 +13,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _auth = FirebaseAuth.instance;
   bool showSpinner = false;
   String email;
   String password;
@@ -62,21 +65,21 @@ class _LoginScreenState extends State<LoginScreen> {
                   color: Colors.tealAccent.shade400,
                   title: 'Log In',
                   onPressed: () async {
-                    // try {
-                    //   setState(() {
-                    //     showSpinner = true;
-                    //   });
-                    //   final user = _auth.signInWithEmailAndPassword(
-                    //       email: email, password: password);
-                    //   if (user != null) {
-                    //     Navigator.pushNamed(context, ChatScreen.id);
-                    //     setState(() {
-                    //       showSpinner = false;
-                    //     });
-                    //   }
-                    // } catch (e) {
-                    //   print(e);
-                    // }
+                    try {
+                      setState(() {
+                        showSpinner = true;
+                      });
+                      final user = _auth.signInWithEmailAndPassword(
+                          email: email, password: password);
+                      if (user != null) {
+                        Navigator.pushReplacementNamed(context, HomeScreen.id);
+                        setState(() {
+                          showSpinner = false;
+                        });
+                      }
+                    } catch (e) {
+                      print(e);
+                    }
                   })
             ],
           ),
