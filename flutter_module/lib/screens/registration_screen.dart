@@ -70,7 +70,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       showSpinner = true;
                     });
                     final newUser = await _auth.createUserWithEmailAndPassword(
-                        email: email, password: password);
+                        email: email.trim(), password: password);
                     if (newUser != null) {
                       Navigator.pushReplacementNamed(context, HomeScreen.id);
                       showSpinner = false;
