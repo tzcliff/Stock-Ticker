@@ -24,15 +24,6 @@ class PricePanel extends StatelessWidget {
     return Column(
       children: <Widget>[
         Expanded(
-          flex: 2,
-          child: Center(
-            child: Text(
-              'Stock Ticker',
-              style: kMainTextStyle,
-            ),
-          ),
-        ),
-        Expanded(
           child: Center(
             child: Text(
               '$symbol',

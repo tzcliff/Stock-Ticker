@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fluttermodule/constants.dart';
 
 import 'package:fluttermodule/services/stock_service.dart';
-import 'package:intl/intl.dart';
 
 import 'package:fluttermodule/components/price_panel.dart';
 
@@ -39,6 +39,7 @@ class _StockInfoScreenState extends State<StockInfoScreen> {
       }
       try {
         lastTradingDay = stockData['Global Quote']['07. latest trading day'];
+
         symbol = stockData['Global Quote']['01. symbol'];
         price = stockData['Global Quote']['05. price'];
         high = stockData['Global Quote']['03. high'];
@@ -62,13 +63,57 @@ class _StockInfoScreenState extends State<StockInfoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-          child: PricePanel(
-              symbol: symbol,
-              lastTradingDay: lastTradingDay,
-              price: price,
-              change: change,
-              high: high,
-              low: low)),
+          child: Column(
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              FlatButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Icon(
+                  Icons.clear,
+                  size: 30,
+                ),
+              ),
+              FlatButton(
+                  onPressed: () {},
+                  child: Text(
+                    'Appy Model',
+                    style: kPriceTextStyle,
+                  )),
+              FlatButton(
+                onPressed: () {},
+                child: Icon(
+                  Icons.add,
+                  size: 30,
+                ),
+              ),
+            ],
+          ),
+          Expanded(
+            flex: 2,
+            child: Center(
+              child: Image(image: AssetImage('images/stock_graph.jpg')),
+              // child: Text(
+              //   'Stock Ticker',
+              //   style: kMainTextStyle,
+              // ),
+            ),
+          ),
+          Expanded(
+            flex: 3,
+            child: PricePanel(
+                symbol: symbol,
+                lastTradingDay: lastTradingDay,
+                price: price,
+                change: change,
+                high: high,
+                low: low),
+          ),
+        ],
+      )),
     );
   }
 }
