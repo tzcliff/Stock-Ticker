@@ -38,9 +38,8 @@ Icon?
 .tags*
 
 build/
-.android/
 .ios/
 .flutter-plugins
 .flutter-plugins-dependencies
 
-constants.dart
+api_keys.dart
