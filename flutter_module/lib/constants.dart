@@ -7,7 +7,7 @@ const kPriceTextStyle =
 
 const kBottomBarTextStyle = TextStyle(fontFamily: 'Baloo2');
 
-const String kAlphaStockAPIKey = 'XYII374F30NG3EVQ';
+
 
 const kSearchStockTextFieldInputDecoration = InputDecoration(
   filled: true,
