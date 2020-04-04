@@ -1,7 +1,6 @@
 import 'dart:collection';
 
 import 'package:fluttermodule/data/stock_search_item_data.dart';
-import 'package:fluttermodule/models/stock_search_item.dart';
 
 import 'network_service.dart';
 import 'package:fluttermodule/api_keys.dart';
