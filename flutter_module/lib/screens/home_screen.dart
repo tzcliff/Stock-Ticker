@@ -5,7 +5,6 @@ import 'package:fluttermodule/screens/model_screen.dart';
 import 'package:fluttermodule/screens/search_stock_screen.dart';
 import 'package:fluttermodule/screens/setting_screen.dart';
 import 'package:fluttermodule/screens/watchlist_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class HomeScreen extends StatefulWidget {
   static String id = 'home_screen';
@@ -14,10 +13,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final _marketScreen = MarketScreen();
-  final _watchlistScreen = WatchlistScreen();
-  final _modelScreen = ModelScreen();
-  final _settingScreen = SettingScreen();
   int selectedIndex = 0;
   final List<Widget> _pages = [
     MarketScreen(),
