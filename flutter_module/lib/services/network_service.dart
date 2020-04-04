@@ -6,6 +6,9 @@ class NetworkService {
   final String url;
 
   NetworkService(this.url);
+  /**
+   * fetching data from url
+   */
   Future getData() async {
     http.Response response = await http.get(url);
     if (response.statusCode == 200) {
@@ -15,6 +18,7 @@ class NetworkService {
       return decodedData;
     } else {
       print(response.statusCode);
+      return null;
     }
   }
 }
