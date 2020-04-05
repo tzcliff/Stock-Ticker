@@ -20,7 +20,7 @@ class WatchListItem extends StatelessWidget {
       onTap: () async {
         StockService stockService = StockService();
         print(symbol);
-        var stockData = await stockService.getStockBySymbol(symbol);
+        var stockData = await stockService.getStockQuoteBySymbol(symbol);
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return StockInfoScreen(
             stockData: stockData,

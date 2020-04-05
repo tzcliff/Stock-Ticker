@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fluttermodule/constants.dart';
-
 import 'package:fluttermodule/services/stock_service.dart';
-
 import 'package:fluttermodule/components/price_panel.dart';
 import 'package:fluttermodule/api_keys.dart';
-
 import 'package:syncfusion_flutter_charts/charts.dart'; // charts
 import 'package:http/http.dart' as http;
 import 'dart:async';

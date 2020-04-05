@@ -7,8 +7,6 @@ const kPriceTextStyle =
 
 const kBottomBarTextStyle = TextStyle(fontFamily: 'Baloo2');
 
-
-
 const kSearchStockTextFieldInputDecoration = InputDecoration(
   filled: true,
   fillColor: Colors.white,

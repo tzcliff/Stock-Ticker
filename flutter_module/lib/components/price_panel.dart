@@ -46,7 +46,7 @@ class PricePanel extends StatelessWidget {
                 style: kPriceTextStyle,
               ),
               Text(
-                'change: $change%',
+                'price change: $change',
                 style: kPriceTextStyle,
               ),
             ],
