@@ -1,9 +1,10 @@
 import 'dart:collection';
-
+import 'dart:convert';
 import 'package:fluttermodule/data/stock_search_item_data.dart';
 
 import 'network_service.dart';
 import 'package:fluttermodule/api_keys.dart';
+import 'package:fluttermodule/models/stock.dart';
 
 const String alphaStockApiURL = 'https://www.alphavantage.co/query';
 
@@ -40,4 +41,24 @@ class StockService {
     }
     return null;
   }
+
+  Future<StockList> fetchStock(String symbol) async {
+    // a future is a Dart class for async operations, a future represents a potential value OR error that will be available at some future time
+    NetworkService networkService = NetworkService('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' +
+        symbol +
+        '&apikey=' +
+        kAlphaStockAPIKey);
+
+    var data = await networkService.getDataListFormat();
+    if (data != null) {
+      // double check the data one last time
+      return data;
+      // return StockList.fromJson(json.decode(response.body));
+    } else {
+      // If the data isn't there for some reason (i.e. not a 200 response code)
+      throw Exception('Failed to load stock');
+    }
+  }
+
 }
+
