@@ -18,9 +18,9 @@ void main() {
       })
     ],
     child: MaterialApp(
-      home: HomeScreen(),
+      home: WelcomeScreen(),
       theme: ThemeData.dark(),
-      initialRoute: HomeScreen.id,
+      initialRoute: WelcomeScreen.id,
       routes: {
         LoginScreen.id: (context) => LoginScreen(),
         MarketScreen.id: (context) => MarketScreen(),
@@ -34,36 +34,3 @@ void main() {
     ),
   ));
 }
-
-// class StockTicker extends StatefulWidget {
-//   @override
-//   _StockTickerState createState() => _StockTickerState();
-// }
-
-// class _StockTickerState extends State<StockTicker> {
-//   var stockData;
-//   // void getStockInfo() async {
-//   //   StockService stockService = StockService();
-//   //   this.stockData = await stockService.getStockBySymbol('FB');
-//   //   Navigator.push(context, MaterialPageRoute(builder: (context) {
-//   //     return StockInfoScreen(stockData: this.stockData);
-//   //   }));
-//   // }
-
-//   @override
-//   void initState() {
-//     super.initState();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Center(
-//         child: SpinKitWave(
-//           color: Colors.white,
-//           size: 100,
-//         ),
-//       ),
-//     );
-//   }
-// }

@@ -40,7 +40,9 @@ class ModelScreen extends StatelessWidget {
           child: ListView.builder(
             itemCount: Provider.of<ModelData>(context).modelsCount,
             itemBuilder: (context, index) {
-              final model = Provider.of<ModelData>(context).models[index];
+              //print(Provider.of<ModelData>(context).modelsCount);
+              final Model model = Provider.of<ModelData>(context).models[index];
+              //print(model.name);
               return ModelItem(name: model.name);
             },
           ),
