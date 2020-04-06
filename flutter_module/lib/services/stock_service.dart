@@ -60,5 +60,14 @@ class StockService {
     }
   }
 
+//  Future<dynamic> getStockPriceBySymbol(String symbol) async {
+//    NetworkService networkService = NetworkService(
+//        '$alphaStockApiURL?function=GLOBAL_QUOTE&symbol=$symbol&apikey=$kAlphaStockAPIKey');
+//
+//    var stockData = await networkService.getData();
+//    // print(stockData['Global Quote']['05. price']);
+//    return stockData['Global Quote']['05. price'];
+//  }
+
 }
 
