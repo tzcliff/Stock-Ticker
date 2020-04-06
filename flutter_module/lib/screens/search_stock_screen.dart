@@ -4,6 +4,7 @@ import 'package:fluttermodule/constants.dart';
 import 'package:fluttermodule/screens/stock_info_screen.dart';
 import 'package:fluttermodule/services/stock_service.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:fluttermodule/components/rounded_button.dart';
 
 class SearchStockScreen extends StatefulWidget {
   static String id = 'search_stock_screen';
@@ -64,7 +65,9 @@ class _SearchStockScreenState extends State<SearchStockScreen> {
                   },
                 ),
               ),
-              FlatButton(
+              RoundedButton(
+                title: 'Get Stock',
+                color: Colors.tealAccent.shade400,
                 onPressed: () async {
                   if (stockSymbol != null) {
                     print(stockSymbol);
@@ -78,11 +81,7 @@ class _SearchStockScreenState extends State<SearchStockScreen> {
                     }));
                   }
                 },
-                child: Text(
-                  'Get Stock',
-                  style: kSearchButtonTextStyle,
-                ),
-              ),
+              )
             ],
           ),
         ),

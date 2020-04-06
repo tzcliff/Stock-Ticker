@@ -5,10 +5,15 @@ import 'package:fluttermodule/models/model.dart';
 import 'package:provider/provider.dart';
 import 'package:fluttermodule/models/model_data.dart';
 
-class AddModelScreen extends StatelessWidget {
+class AddModelScreen extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    String modelName;
+  _AddModelScreenState createState() => _AddModelScreenState();
+}
+
+class _AddModelScreenState extends State<AddModelScreen> {
+  String modelName;
+  @override
+  Widget build(BuildContext dcontext) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
       child: Column(
@@ -23,6 +28,7 @@ class AddModelScreen extends StatelessWidget {
           ),
           TextField(
             textAlign: TextAlign.center,
+            autofocus: true,
             onChanged: (value) {
               modelName = value;
               print(modelName);
@@ -32,15 +38,14 @@ class AddModelScreen extends StatelessWidget {
           ),
           Center(
             child: RoundedButton(
-                color: Colors.tealAccent.shade400,
-                title: 'Add',
-                onPressed: () {
-                  Model model = Model(name: modelName);
-                  print(model.name);
-                  Provider.of<ModelData>(context, listen: false)
-                      .addModel(model);
-                  Navigator.pop(context);
-                }),
+              onPressed: () {
+                Model model = Model(name: modelName);
+                Provider.of<ModelData>(context, listen: false).addModel(model);
+                Navigator.pop(context);
+              },
+              color: Colors.tealAccent.shade400,
+              title: 'Add',
+            ),
           ),
         ],
       ),
