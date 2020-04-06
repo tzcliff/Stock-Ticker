@@ -53,13 +53,11 @@ class _WatchlistScreenState extends State<WatchlistScreen> {
       String symbol = item.symbol;
       var stockData = await stockService.getStockQuoteBySymbol(symbol);
       double newPrice = double.parse(stockData['Global Quote']['05. price']);
-      item.price = newPrice;
+      setState(() { // for some reason setState is called before our await returns so the numbers only update after a hot reload
+        // to update the numbers in our list
+        item.price = newPrice;
+      });
     }
-    setState(() {
-      // to update the numbers in our list
-    });
-
-
   }
 
   @override
