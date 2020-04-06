@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fluttermodule/components/model_item.dart';
+import 'add_model_screen.dart';
 
-class ModelScreen extends StatefulWidget {
+class ModelScreen extends StatelessWidget {
   static String id = 'model_screen';
-  @override
-  _ModelScreenState createState() => _ModelScreenState();
-}
 
-class _ModelScreenState extends State<ModelScreen> {
-  @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
@@ -17,7 +13,18 @@ class _ModelScreenState extends State<ModelScreen> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
               FlatButton(
-                onPressed: () {},
+                onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) => SingleChildScrollView(
+                      child: Container(
+                        padding: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).viewInsets.bottom),
+                        child: AddModelScreen(),
+                      ),
+                    ),
+                  );
+                },
                 child: Icon(
                   Icons.add,
                   size: 30,
@@ -31,15 +38,6 @@ class _ModelScreenState extends State<ModelScreen> {
             children: <Widget>[
               ModelItem(name: 'Model 1'),
               ModelItem(name: 'Model 2'),
-              ModelItem(name: 'Model 3'),
-              ModelItem(name: 'Model 4'),
-              ModelItem(name: 'Model 5'),
-              ModelItem(name: 'Model 6'),
-              ModelItem(name: 'Model 7'),
-              ModelItem(name: 'Model 8'),
-              ModelItem(name: 'Model 9'),
-              ModelItem(name: 'Model 10'),
-              ModelItem(name: 'Model 11'),
             ],
           ),
         ),

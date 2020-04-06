@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttermodule/constants.dart';
 import 'package:fluttermodule/screens/martket_screen.dart';
@@ -14,15 +15,29 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex = 0;
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  FirebaseUser loggedInUser;
+
   final List<Widget> _pages = [
     MarketScreen(),
     WatchlistScreen(),
     ModelScreen(),
     SettingScreen(),
   ];
+
+  void getCurrentUser() async {
+    try {
+      final user = await _auth.currentUser();
+      if (user != null) {
+        loggedInUser = user;
+        print(user.email);
+      }
+    } catch (e) {}
+  }
+
   @override
   void initState() {
-    print('init');
+    getCurrentUser();
     super.initState();
   }
 
