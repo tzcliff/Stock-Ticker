@@ -14,6 +14,7 @@ class ModelItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5),
       child: Material(
+        color: Colors.tealAccent.shade400,
         elevation: 5,
         child: Padding(
           child: Row(

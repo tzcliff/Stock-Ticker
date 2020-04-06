@@ -70,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         showSpinner = true;
                       });
                       final user = _auth.signInWithEmailAndPassword(
-                          email: email, password: password);
+                          email: email.trim(), password: password);
                       if (user != null) {
                         Navigator.pushReplacementNamed(context, HomeScreen.id);
                         setState(() {
