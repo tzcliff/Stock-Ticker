@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fluttermodule/components/model_item.dart';
+import 'package:fluttermodule/models/model.dart';
 import 'add_model_screen.dart';
+import 'package:fluttermodule/models/model_data.dart';
+import 'package:provider/provider.dart';
 
 class ModelScreen extends StatelessWidget {
   static String id = 'model_screen';
@@ -34,11 +37,12 @@ class ModelScreen extends StatelessWidget {
           ),
         ),
         Expanded(
-          child: ListView(
-            children: <Widget>[
-              ModelItem(name: 'Model 1'),
-              ModelItem(name: 'Model 2'),
-            ],
+          child: ListView.builder(
+            itemCount: Provider.of<ModelData>(context).modelsCount,
+            itemBuilder: (context, index) {
+              final model = Provider.of<ModelData>(context).models[index];
+              return ModelItem(name: model.name);
+            },
           ),
         ),
       ],

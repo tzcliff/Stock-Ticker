@@ -1,11 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttermodule/constants.dart';
+import 'package:fluttermodule/models/model_data.dart';
 import 'package:fluttermodule/screens/martket_screen.dart';
 import 'package:fluttermodule/screens/model_screen.dart';
 import 'package:fluttermodule/screens/search_stock_screen.dart';
 import 'package:fluttermodule/screens/setting_screen.dart';
 import 'package:fluttermodule/screens/watchlist_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:fluttermodule/models/model_data.dart';
 
 class HomeScreen extends StatefulWidget {
   static String id = 'home_screen';
