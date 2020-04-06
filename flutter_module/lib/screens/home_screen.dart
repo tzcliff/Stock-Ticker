@@ -6,6 +6,7 @@ import 'package:fluttermodule/screens/search_stock_screen.dart';
 import 'package:fluttermodule/screens/setting_screen.dart';
 import 'package:fluttermodule/screens/watchlist_screen.dart';
 
+
 class HomeScreen extends StatefulWidget {
   static String id = 'home_screen';
   @override
@@ -14,6 +15,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex = 0;
+  String uid;
   final List<Widget> _pages = [
     MarketScreen(),
     WatchlistScreen(),
