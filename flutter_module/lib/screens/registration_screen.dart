@@ -5,6 +5,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:fluttermodule/constants.dart';
 import 'package:fluttermodule/components/rounded_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttermodule/services/database.dart';
 
 class RegistrationScreen extends StatefulWidget {
   static String id = 'registration_screen';
@@ -72,6 +73,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     final newUser = await _auth.createUserWithEmailAndPassword(
                         email: email.trim(), password: password);
                     if (newUser != null) {
+                      FirebaseUser fbUser = await FirebaseAuth.instance.currentUser();
+                      // create a new document for the user with the uid
+                      await DatabaseService(uid: fbUser.uid).updateWatchlistData("");
                       Navigator.pushReplacementNamed(context, HomeScreen.id);
                       showSpinner = false;
                     }

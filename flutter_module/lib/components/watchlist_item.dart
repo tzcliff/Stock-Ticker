@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:fluttermodule/constants.dart';
@@ -5,10 +6,10 @@ import 'package:fluttermodule/screens/stock_info_screen.dart';
 import 'package:fluttermodule/services/stock_service.dart';
 
 class WatchListItem extends StatelessWidget {
-  final String symbol;
-  final double price;
+   String symbol;
+   double price;
 
-  const WatchListItem({
+   WatchListItem({
     Key key,
     @required this.symbol,
     @required this.price,

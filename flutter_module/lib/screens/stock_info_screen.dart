@@ -6,6 +6,8 @@ import 'package:fluttermodule/models/stock.dart';
 import 'package:syncfusion_flutter_charts/charts.dart'; // charts
 import 'dart:async';
 import 'package:flutter/foundation.dart'; // for debugPrint()
+import 'package:fluttermodule/services/database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 
 List globalStockList;
@@ -22,6 +24,7 @@ class StockInfoScreen extends StatefulWidget {
 
 class _StockInfoScreenState extends State<StockInfoScreen> {
   String dropdownValue = 'High prices';
+  String uid;
 
   StockService stockService = StockService();
   int selectedIndex = 0;
@@ -42,6 +45,18 @@ class _StockInfoScreenState extends State<StockInfoScreen> {
     futureStock =
         stockService.fetchStock(symbol); // populate the object with data from the API
     //print("futureStock: " + futureStock.toString());
+
+    FirebaseAuth.instance.currentUser().then((res) { // get current user
+      print(res);
+      if (res != null) {
+        uid = res.uid;
+        print("uid ${uid}");
+      }
+      else
+      {
+        print("error getting user id");
+      }
+    });
   }
 
   void updateUI(dynamic stockData) {
@@ -98,7 +113,9 @@ class _StockInfoScreenState extends State<StockInfoScreen> {
                     style: kPriceTextStyle,
                   )),
               FlatButton(
-                onPressed: () {},
+                onPressed: () {
+                   DatabaseService(uid: uid).addOrRemoveWatchListData(symbol);
+                },
                 child: Icon(
                   Icons.add,
                   size: 30,

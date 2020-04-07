@@ -10,6 +10,7 @@ import 'package:fluttermodule/screens/watchlist_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:fluttermodule/models/model_data.dart';
 
+
 class HomeScreen extends StatefulWidget {
   static String id = 'home_screen';
   @override
@@ -18,6 +19,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex = 0;
+
+  String uid;
   FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseUser loggedInUser;
 

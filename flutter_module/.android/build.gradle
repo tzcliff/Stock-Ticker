@@ -1,5 +1,5 @@
 // Generated file. Do not edit.
-apply plugin: 'com.google.gms.google-services' 
+
 buildscript {
     repositories {
         google()
