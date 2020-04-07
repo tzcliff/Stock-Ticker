@@ -6,9 +6,10 @@ import 'package:fluttermodule/models/stock.dart';
 import 'package:syncfusion_flutter_charts/charts.dart'; // charts
 import 'dart:async';
 import 'package:flutter/foundation.dart'; // for debugPrint()
-import 'package:fluttermodule/services/database.dart';
+import 'package:fluttermodule/services/database_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:fluttermodule/models/watchlist_data.dart';
+import 'package:provider/provider.dart';
 
 List globalStockList;
 
@@ -42,18 +43,17 @@ class _StockInfoScreenState extends State<StockInfoScreen> {
     updateUI(widget.stockData);
     super.initState();
     StockService stockService = new StockService();
-    futureStock =
-        stockService.fetchStock(symbol); // populate the object with data from the API
+    futureStock = stockService
+        .fetchStock(symbol); // populate the object with data from the API
     //print("futureStock: " + futureStock.toString());
 
-    FirebaseAuth.instance.currentUser().then((res) { // get current user
+    FirebaseAuth.instance.currentUser().then((res) {
+      // get current user
       print(res);
       if (res != null) {
         uid = res.uid;
         print("uid ${uid}");
-      }
-      else
-      {
+      } else {
         print("error getting user id");
       }
     });
@@ -114,7 +114,10 @@ class _StockInfoScreenState extends State<StockInfoScreen> {
                   )),
               FlatButton(
                 onPressed: () {
-                   DatabaseService(uid: uid).addOrRemoveWatchListData(symbol);
+                  DatabaseService(uid: uid).addOrRemoveWatchListData(symbol);
+                  Provider.of<WatchlistData>(context, listen: false)
+                      .addItemIfNotExistBySymbol(
+                          symbol: symbol, price: double.parse(price));
                 },
                 child: Icon(
                   Icons.add,
@@ -229,6 +232,3 @@ class _StockInfoScreenState extends State<StockInfoScreen> {
 }
 
 //    var open = stockData['Time Series (Daily)']['2020-03-23']['1. open'];
-
-
-

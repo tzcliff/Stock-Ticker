@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttermodule/screens/home_screen.dart';
-import 'package:fluttermodule/services/database.dart';
+import 'package:fluttermodule/services/database_service.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:fluttermodule/constants.dart';
@@ -21,12 +21,10 @@ class _LoginScreenState extends State<LoginScreen> {
   String email;
   String password;
 
-
-
   Future<String> signInWithGoogle() async {
     final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
     final GoogleSignInAuthentication googleSignInAuthentication =
-    await googleSignInAccount.authentication;
+        await googleSignInAccount.authentication;
 
     final AuthCredential credential = GoogleAuthProvider.getCredential(
       accessToken: googleSignInAuthentication.accessToken,
@@ -45,13 +43,11 @@ class _LoginScreenState extends State<LoginScreen> {
     return 'signInWithGoogle succeeded: $user';
   }
 
-  void signOutGoogle() async{
+  void signOutGoogle() async {
     await googleSignIn.signOut();
 
     print("User Sign Out");
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -106,13 +102,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         showSpinner = true;
                       });
                       final user = _auth.signInWithEmailAndPassword(
-
-                         email: email.trim(), password: password);
-                      FirebaseUser fbUser = await FirebaseAuth.instance.currentUser();
+                          email: email.trim(), password: password);
+                      FirebaseUser fbUser =
+                          await FirebaseAuth.instance.currentUser();
                       // create a new document for the user with the uid
-                      await DatabaseService(uid: fbUser.uid).updateWatchlistData("");
-
-                          
+                      await DatabaseService(uid: fbUser.uid)
+                          .updateWatchlistData("");
 
                       if (user != null) {
                         Navigator.pushReplacementNamed(context, HomeScreen.id);
@@ -124,48 +119,49 @@ class _LoginScreenState extends State<LoginScreen> {
                       print(e);
                     }
                   }),
-      OutlineButton(
-        splashColor: Colors.grey,
-        onPressed: () {
-          signInWithGoogle().whenComplete(() {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) {
-                  return HomeScreen();
+              OutlineButton(
+                splashColor: Colors.grey,
+                onPressed: () {
+                  signInWithGoogle().whenComplete(() {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return HomeScreen();
+                        },
+                      ),
+                    );
+                  });
                 },
-              ),
-            );
-          });
-        },
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
-        highlightElevation: 0,
-        borderSide: BorderSide(color: Colors.grey),
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Image(image: AssetImage("images/google.png"), height: 35.0),
-              Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Text(
-                  'Sign in with Google',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.grey,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(40)),
+                highlightElevation: 0,
+                borderSide: BorderSide(color: Colors.grey),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Image(
+                          image: AssetImage("images/google.png"), height: 35.0),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Text(
+                          'Sign in with Google',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      )
+                    ],
                   ),
                 ),
               )
             ],
           ),
         ),
-      )
-        ],
-          ),
-        ),
       ),
     );
   }
 }
-

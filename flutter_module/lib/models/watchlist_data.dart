@@ -1,11 +1,10 @@
 import 'dart:collection';
 
 import 'package:flutter/cupertino.dart';
-import 'package:fluttermodule/models/watchlist_item.dart';
+import 'package:fluttermodule/models/watchlist_stock.dart';
 
-class ModelData extends ChangeNotifier {
-  List<WatchlistItem> _items = [
-  ];
+class WatchlistData extends ChangeNotifier {
+  List<WatchlistStock> _items = [];
   UnmodifiableListView get items {
     return UnmodifiableListView(_items);
   }
@@ -14,13 +13,24 @@ class ModelData extends ChangeNotifier {
     return _items.length;
   }
 
-  void addItem(WatchlistItem item) {
+  void addItem(WatchlistStock item) {
     _items.add(item);
     notifyListeners();
   }
 
-  void deleteItem(WatchlistItem item) {
+  void deleteItem(WatchlistStock item) {
     _items.remove(item);
     notifyListeners();
+  }
+
+  bool addItemIfNotExistBySymbol({@required String symbol, double price = 0}) {
+    for (WatchlistStock stock in items) {
+      if (stock.symbol == symbol) {
+        return false;
+      }
+    }
+    _items.add(WatchlistStock(symbol: symbol, price: price));
+    notifyListeners();
+    return true;
   }
 }
