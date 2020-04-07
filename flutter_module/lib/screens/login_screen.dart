@@ -106,10 +106,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         showSpinner = true;
                       });
                       final user = _auth.signInWithEmailAndPassword(
-                          email: email, password: password);
+
+                         email: email.trim(), password: password);
                       FirebaseUser fbUser = await FirebaseAuth.instance.currentUser();
                       // create a new document for the user with the uid
                       await DatabaseService(uid: fbUser.uid).updateWatchlistData("");
+
+                          
+
                       if (user != null) {
                         Navigator.pushReplacementNamed(context, HomeScreen.id);
                         setState(() {

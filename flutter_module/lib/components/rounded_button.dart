@@ -22,6 +22,8 @@ class RoundedButton extends StatelessWidget {
           child: Text(
             title,
             style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
               fontFamily: 'Baloo2',
             ),
           ),

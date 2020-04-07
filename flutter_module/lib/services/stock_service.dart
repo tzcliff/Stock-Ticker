@@ -9,9 +9,7 @@ import 'package:fluttermodule/models/stock.dart';
 const String alphaStockApiURL = 'https://www.alphavantage.co/query';
 
 class StockService {
-  /**
-   * Get Stock Quote By Symbol
-   */
+  /// Get Stock Quote By Symbol
   Future<dynamic> getStockQuoteBySymbol(String symbol) async {
     NetworkService networkService = NetworkService(
         '$alphaStockApiURL?function=GLOBAL_QUOTE&symbol=$symbol&apikey=$kAlphaStockAPIKey');
@@ -20,9 +18,7 @@ class StockService {
     return stockData;
   }
 
-  /**
-   * Get Stock Search Suggestions Future by keyword
-   */
+  /// Get Stock Search Suggestions Future by keyword
   Future<dynamic> getStockSearchSuggestionByKeyword(String keyword) async {
     NetworkService networkService = NetworkService(
         '$alphaStockApiURL?function=SYMBOL_SEARCH&keywords=$keyword&apikey=$kAlphaStockAPIKey');
@@ -30,9 +26,8 @@ class StockService {
     return searchData;
   }
 
-  /**
-   * Get List<StockSearchItem>
-   *  */
+  /// Get List<StockSearchItem>
+  ///  */
   Future<List<dynamic>> getStockSearchItems(String keyword) async {
     var searchData = await getStockSearchSuggestionByKeyword(keyword);
     if (searchData != null) {
@@ -44,10 +39,11 @@ class StockService {
 
   Future<StockList> fetchStock(String symbol) async {
     // a future is a Dart class for async operations, a future represents a potential value OR error that will be available at some future time
-    NetworkService networkService = NetworkService('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' +
-        symbol +
-        '&apikey=' +
-        kAlphaStockAPIKey);
+    NetworkService networkService = NetworkService(
+        'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' +
+            symbol +
+            '&apikey=' +
+            kAlphaStockAPIKey);
 
     var data = await networkService.getDataListFormat();
     if (data != null) {
@@ -59,15 +55,4 @@ class StockService {
       throw Exception('Failed to load stock');
     }
   }
-
-//  Future<dynamic> getStockPriceBySymbol(String symbol) async {
-//    NetworkService networkService = NetworkService(
-//        '$alphaStockApiURL?function=GLOBAL_QUOTE&symbol=$symbol&apikey=$kAlphaStockAPIKey');
-//
-//    var stockData = await networkService.getData();
-//    // print(stockData['Global Quote']['05. price']);
-//    return stockData['Global Quote']['05. price'];
-//  }
-
 }
-
