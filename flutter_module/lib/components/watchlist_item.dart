@@ -6,10 +6,10 @@ import 'package:fluttermodule/screens/stock_info_screen.dart';
 import 'package:fluttermodule/services/stock_service.dart';
 
 class WatchListItem extends StatelessWidget {
-   String symbol;
-   double price;
+  final String symbol;
+  final double price;
 
-   WatchListItem({
+  WatchListItem({
     Key key,
     @required this.symbol,
     @required this.price,
@@ -31,6 +31,7 @@ class WatchListItem extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 5),
         child: Material(
+          color: Colors.tealAccent.shade400,
           elevation: 5,
           child: Padding(
             child: Row(

@@ -9,13 +9,17 @@ import 'package:fluttermodule/screens/search_stock_screen.dart';
 import 'package:fluttermodule/screens/watchlist_screen.dart';
 import 'package:fluttermodule/screens/welcome_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:fluttermodule/models/watchlist_data.dart';
 
 void main() {
   runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider(create: (context) {
+      ChangeNotifierProvider<ModelData>(create: (context) {
         return ModelData();
-      })
+      }),
+      ChangeNotifierProvider<WatchlistData>(create: (context) {
+        return WatchlistData();
+      }),
     ],
     child: MaterialApp(
       home: WelcomeScreen(),
