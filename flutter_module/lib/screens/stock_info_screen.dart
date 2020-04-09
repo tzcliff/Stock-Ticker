@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttermodule/constants.dart';
+import 'package:fluttermodule/screens/home_screen.dart';
 import 'package:fluttermodule/services/stock_service.dart';
 import 'package:fluttermodule/components/price_panel.dart';
 import 'package:fluttermodule/models/stock.dart';
@@ -46,17 +47,7 @@ class _StockInfoScreenState extends State<StockInfoScreen> {
     futureStock = stockService
         .fetchStock(symbol); // populate the object with data from the API
     //print("futureStock: " + futureStock.toString());
-
-    FirebaseAuth.instance.currentUser().then((res) {
-      // get current user
-      print(res);
-      if (res != null) {
-        uid = res.uid;
-        print("uid ${uid}");
-      } else {
-        print("error getting user id");
-      }
-    });
+    uid = HomeScreen.uid;
   }
 
   void updateUI(dynamic stockData) {

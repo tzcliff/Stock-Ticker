@@ -4,6 +4,7 @@ import 'package:fluttermodule/components/watchlist_item.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttermodule/models/stock.dart';
 import 'package:fluttermodule/models/watchlist_stock.dart';
+import 'package:fluttermodule/screens/home_screen.dart';
 import 'package:fluttermodule/services/stock_service.dart';
 import 'package:provider/provider.dart';
 import 'package:fluttermodule/models/watchlist_data.dart';
@@ -21,21 +22,9 @@ class _WatchlistScreenState extends State<WatchlistScreen> {
   FirebaseAuth _auth = FirebaseAuth.instance;
   List<WatchListItem> watchListItems = [];
 
-  void getCurrentUser() async {
-    try {
-      final user = await _auth.currentUser();
-      if (user != null) {
-        loggedInUser = user;
-        uid = loggedInUser.uid;
-        print(uid);
-        print(user.email);
-      }
-    } catch (e) {}
-  }
-
   @override
   void initState() {
-    getCurrentUser();
+    uid = HomeScreen.uid;
     super.initState();
   }
 
