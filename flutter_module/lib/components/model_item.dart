@@ -1,22 +1,33 @@
 import 'package:flutter/material.dart';
 
 import 'package:fluttermodule/constants.dart';
+import 'package:fluttermodule/models/model.dart';
 import 'package:fluttermodule/screens/model_info_screen.dart';
 
 class ModelItem extends StatelessWidget {
-  final String name;
+  final Model model;
 
   const ModelItem({
-    @required this.name,
-  });
+    Key key,
+    this.model,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return ModelInfoScreen();
-        }));
+        showModalBottomSheet(
+          context: context,
+          builder: (context) => SingleChildScrollView(
+            child: Container(
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: ModelInfoScreen(
+                model: model,
+              ),
+            ),
+          ),
+        );
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 5),
@@ -28,7 +39,7 @@ class ModelItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text(
-                  '$name',
+                  '${model.name}',
                   style: kPriceTextStyle,
                 ),
               ],

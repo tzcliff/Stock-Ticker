@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 class IconRoundButton extends StatelessWidget {
   final Function onPress;
   final IconData iconData;
+  final double size;
   const IconRoundButton({
     this.onPress,
     this.iconData,
+    this.size = 20,
   });
 
   @override
@@ -14,6 +16,7 @@ class IconRoundButton extends StatelessWidget {
       onPressed: this.onPress,
       child: Icon(
         this.iconData,
+        size: size,
       ),
       shape: CircleBorder(),
       elevation: 2.0,

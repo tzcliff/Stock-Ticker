@@ -1,6 +1,5 @@
 import 'dart:collection';
 import 'dart:convert';
-import 'package:fluttermodule/data/stock_search_item_data.dart';
 
 import 'network_service.dart';
 import 'package:fluttermodule/api_keys.dart';

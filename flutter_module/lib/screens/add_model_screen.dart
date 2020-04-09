@@ -31,8 +31,8 @@ class _AddModelScreenState extends State<AddModelScreen> {
         stockItem: StockItem.price,
         trend: Trend.increase,
         scope: 10,
-        dayPeriod: 2));
-    print(conditionals[conditionals.length - 1].dayPeriod.toString());
+        duration: 2));
+    print(conditionals[conditionals.length - 1].duration.toString());
     setState(() {
       listTiles.add(ConditionalListTile(index: conditionals.length - 1));
     });
@@ -47,7 +47,7 @@ class _AddModelScreenState extends State<AddModelScreen> {
         children: <Widget>[
           Text(
             'Model Name',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: kModelPageTextStyle,
           ),
           SizedBox(
             height: 10,
@@ -68,14 +68,14 @@ class _AddModelScreenState extends State<AddModelScreen> {
             children: <Widget>[
               Text(
                 'Conditionals',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: kModelPageTextStyle,
               ),
               IconRoundButton(
                 iconData: Icons.add,
                 onPress: () {
                   createConditional();
                 },
-              )
+              ),
             ],
           ),
           Column(
@@ -83,7 +83,7 @@ class _AddModelScreenState extends State<AddModelScreen> {
           ),
           Text(
             'Action',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: kModelPageTextStyle,
           ),
           SizedBox(
             height: 10,
@@ -133,7 +133,6 @@ class _ConditionalListTileState extends State<ConditionalListTile> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
       child: ListTile(
         leading: ModelItemDropdown(
           selected: conditionals[widget.index].stockItem,
@@ -152,10 +151,10 @@ class _ConditionalListTileState extends State<ConditionalListTile> {
           },
         ),
         trailing: ModelPeriodDropdown(
-          selected: conditionals[widget.index].dayPeriod,
+          selected: conditionals[widget.index].duration,
           onChange: (value) {
             setState(() {
-              conditionals[widget.index].dayPeriod = value;
+              conditionals[widget.index].duration = value;
             });
           },
         ),
