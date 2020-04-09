@@ -29,6 +29,12 @@ const kSearchButtonTextStyle = TextStyle(
   fontFamily: 'Baloo2',
 );
 
+const kModelPageTextStyle = TextStyle(
+  fontSize: 18,
+  fontWeight: FontWeight.bold,
+  fontFamily: 'Baloo2',
+);
+
 const kTextFieldDecoration = InputDecoration(
   hintText: '',
   contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
@@ -47,6 +53,7 @@ const kTextFieldDecoration = InputDecoration(
 
 const kCreateModelTextFieldDecoration = InputDecoration(
   hintText: '',
+  hintStyle: kModelPageTextStyle,
   contentPadding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
   border: OutlineInputBorder(
     borderRadius: BorderRadius.all(Radius.circular(32.0)),

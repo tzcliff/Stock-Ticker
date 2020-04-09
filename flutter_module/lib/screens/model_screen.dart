@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fluttermodule/components/model_item.dart';
-import 'package:fluttermodule/models/model.dart';
 import 'add_model_screen.dart';
 import 'package:fluttermodule/models/model_data.dart';
 import 'package:provider/provider.dart';
+import 'package:fluttermodule/models/model.dart';
 
 class ModelScreen extends StatelessWidget {
   static String id = 'model_screen';
@@ -40,10 +40,12 @@ class ModelScreen extends StatelessWidget {
           child: ListView.builder(
             itemCount: Provider.of<ModelData>(context).modelsCount,
             itemBuilder: (context, index) {
-              //print(Provider.of<ModelData>(context).modelsCount);
-              final Model model = Provider.of<ModelData>(context).models[index];
-              //print(model.name);
-              return ModelItem(name: model.name);
+              final Model m =
+                  Provider.of<ModelData>(context).models.elementAt(index);
+              print(m.name);
+              return ModelItem(
+                model: m,
+              );
             },
           ),
         ),
