@@ -1,26 +1,24 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttermodule/constants.dart';
-import 'package:fluttermodule/models/model_data.dart';
 import 'package:fluttermodule/screens/martket_screen.dart';
 import 'package:fluttermodule/screens/model_screen.dart';
 import 'package:fluttermodule/screens/search_stock_screen.dart';
 import 'package:fluttermodule/screens/setting_screen.dart';
 import 'package:fluttermodule/screens/watchlist_screen.dart';
-import 'package:provider/provider.dart';
-import 'package:fluttermodule/models/model_data.dart';
-
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class HomeScreen extends StatefulWidget {
   static String id = 'home_screen';
+  static String uid = '';
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex = 0;
+  bool showSpinner = false;
 
-  String uid;
   FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseUser loggedInUser;
 
@@ -35,14 +33,20 @@ class _HomeScreenState extends State<HomeScreen> {
     try {
       final user = await _auth.currentUser();
       if (user != null) {
+        setState(() {
+          showSpinner = false;
+        });
+
         loggedInUser = user;
-        print(user.email);
+        HomeScreen.uid = loggedInUser.uid;
+        print(user.uid);
       }
     } catch (e) {}
   }
 
   @override
   void initState() {
+    showSpinner = true;
     getCurrentUser();
     super.initState();
   }
@@ -96,7 +100,9 @@ class _HomeScreenState extends State<HomeScreen> {
         onTap: onBottomItemTapped,
         fixedColor: Colors.teal,
       ),
-      body: SafeArea(child: _pages[selectedIndex]),
+      body: ModalProgressHUD(
+          inAsyncCall: showSpinner,
+          child: SafeArea(child: _pages[selectedIndex])),
     );
   }
 
