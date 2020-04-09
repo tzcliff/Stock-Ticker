@@ -8,6 +8,7 @@ import 'package:fluttermodule/screens/home_screen.dart';
 import 'package:fluttermodule/services/stock_service.dart';
 import 'package:provider/provider.dart';
 import 'package:fluttermodule/models/watchlist_data.dart';
+import 'dart:math';
 
 class WatchlistScreen extends StatefulWidget {
   static String id = 'watchlist_screen';
@@ -35,7 +36,7 @@ class _WatchlistScreenState extends State<WatchlistScreen> {
           .collection('watchlists')
           .document(uid)
           .snapshots(), // getCurrentUser() works now
-      builder: (context, snapshot) {
+      builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.hasError) {
           return new Center(
             child: Text('Error: ${snapshot.error}'),
@@ -46,7 +47,7 @@ class _WatchlistScreenState extends State<WatchlistScreen> {
             child: CircularProgressIndicator(),
           );
         } else {
-          var documents = snapshot.data.data; // get the data
+          // var documents = snapshot.data.data; // get the data
 
           // comment out as the documents are always null for some reason
 
@@ -64,17 +65,39 @@ class _WatchlistScreenState extends State<WatchlistScreen> {
           //       .addItemIfNotExistBySymbol(symbols.elementAt(x));
           // }
           //updateWatchList(); // call stock services to update our prices
+//          return new Center(
+//            child: ListView.builder(
+//              itemCount: Provider.of<WatchlistData>(context).itemsCount,
+//              itemBuilder: (context, index) {
+//                final WatchlistStock stock =
+//                    Provider.of<WatchlistData>(context).items[index];
+//                return WatchListItem(
+//                  symbol: stock.symbol,
+//                  price: stock.price,
+//                );
+//              },
+//            ),
+//          );
+          var documents = snapshot.data.data; // get the data
+          if (documents == null) {
+            return new Center(
+              child: Text("Add some stocks to your watchlist!"),
+            );
+          }
+          var vals = documents.values; // values from data
+          List symbols = vals.elementAt(0); // all our values are in an array on firestore called symbols which is at index 0
+          var rng = new Random();
+          for (int x = 0; x < symbols.length; x++) {
+            watchListItems.add(
+              WatchListItem(
+                symbol: symbols.elementAt(x),
+                price: double.parse(rng.nextInt(350).toString()), // random double for now
+              ),
+            );
+          }
           return new Center(
-            child: ListView.builder(
-              itemCount: Provider.of<WatchlistData>(context).itemsCount,
-              itemBuilder: (context, index) {
-                final WatchlistStock stock =
-                    Provider.of<WatchlistData>(context).items[index];
-                return WatchListItem(
-                  symbol: stock.symbol,
-                  price: stock.price,
-                );
-              },
+            child: ListView(
+              children: watchListItems,
             ),
           );
         }

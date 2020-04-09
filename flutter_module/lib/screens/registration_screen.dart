@@ -75,7 +75,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     if (newUser != null) {
                       FirebaseUser fbUser =
                           await FirebaseAuth.instance.currentUser();
-                      // create a new document for the user with the uid
+                      // create a new document for the user with the uid since it's a new user
                       await DatabaseService(uid: fbUser.uid)
                           .updateWatchlistData("");
                       Navigator.pushReplacementNamed(context, HomeScreen.id);
