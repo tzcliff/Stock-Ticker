@@ -41,8 +41,6 @@ class ModelScreen extends StatelessWidget {
             itemCount: Provider.of<ModelData>(context).modelsCount,
             itemBuilder: (context, index) {
               final Model m = Provider.of<ModelData>(context).models[index];
-              print(m.conditionals.length);
-              print(m.name);
               return ModelItem(
                 model: m,
               );

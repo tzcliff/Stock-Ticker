@@ -105,6 +105,7 @@ class _AddModelScreenState extends State<AddModelScreen> {
                   conditionals: conditionals,
                 );
                 Provider.of<ModelData>(context, listen: false).addModel(model);
+                conditionals = [];
                 Navigator.pop(context);
               },
               color: Colors.tealAccent.shade400,
