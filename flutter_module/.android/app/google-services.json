@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "964419165747",
+    "firebase_url": "https://stock-ticker-30601.firebaseio.com",
+    "project_id": "stock-ticker-30601",
+    "storage_bucket": "stock-ticker-30601.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:964419165747:android:0844a7506bbce73eef4d46",
+        "android_client_info": {
+          "package_name": "com.cs591.fluttermodule.host"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "964419165747-djt3267nbmroa7f2dg77mcq9fj88vqvk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6xo5BuDLgzbzuOESE3htoIsFNdF8MYGs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "964419165747-djt3267nbmroa7f2dg77mcq9fj88vqvk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
