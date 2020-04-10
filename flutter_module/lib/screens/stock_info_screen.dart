@@ -221,5 +221,3 @@ class _StockInfoScreenState extends State<StockInfoScreen> {
     );
   }
 }
-
-//    var open = stockData['Time Series (Daily)']['2020-03-23']['1. open'];
