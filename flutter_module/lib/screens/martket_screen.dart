@@ -24,13 +24,14 @@ class _MarketScreenState extends State<MarketScreen> {
   }
 
   void getData() async {
-    NetworkService networkService = new NetworkService("");
+    NetworkService networkService1 = new NetworkService("https://query1.finance.yahoo.com/v7/finance/chart/^DWCPF?&interval=5m");
+    NetworkService networkService2 = new NetworkService("https://query1.finance.yahoo.com/v7/finance/chart/^IXIC?&interval=5m");
     var dowData;
     var nasdaqData;
-    dowJones =  networkService.getDow();
+    dowJones =  networkService1.getData();
     dowJones.then((value) {
       dowData = value;
-      nasdaq =  networkService.getNasdaq();
+      nasdaq =  networkService2.getData();
       nasdaq.then((value) {
         nasdaqData = value;
         updateUI(dowData, nasdaqData);

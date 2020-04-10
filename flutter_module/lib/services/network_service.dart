@@ -33,28 +33,4 @@ class NetworkService {
     }
   }
 
-  Future getNasdaq() async { // get the lastest value of the NASDAQ index
-    final response = await http.get('https://query1.finance.yahoo.com/v7/finance/chart/^IXIC?&interval=5m'); // No API key needed
-    if (response.statusCode == 200) {
-      var decodedData = jsonDecode(response.body);
-      return decodedData;
-    }
-    else {
-      print(response.statusCode);
-      return null;
-    }
-  }
-
-  Future getDow() async { // get the lastest value of the Dow Jones
-    final response = await http.get('https://query1.finance.yahoo.com/v7/finance/chart/^DWCPF?&interval=5m'); // No API key needed
-    if (response.statusCode == 200) {
-      var decodedData = jsonDecode(response.body);
-      return decodedData;
-    }
-    else {
-      print(response.statusCode);
-      return null;
-    }
-  }
-
 }
