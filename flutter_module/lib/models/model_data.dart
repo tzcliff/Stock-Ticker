@@ -28,7 +28,7 @@ class ModelData extends ChangeNotifier {
     ]),
     Model(name: 'Model 3', action: UserAction.buy, conditionals: [
       Conditional(
-          stockItem: StockItem.price,
+          stockItem: StockItem.high,
           trend: Trend.increase,
           scope: 10,
           duration: 4),

@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'enums.dart';
 
 class Conditional {
-  StockItem stockItem = StockItem.price;
+  StockItem stockItem = StockItem.close;
   Trend trend = Trend.increase;
   double scope = 10.0;
   int duration = 2;
