@@ -28,7 +28,7 @@ class _AddModelScreenState extends State<AddModelScreen> {
 
   void createConditional() {
     conditionals.add(Conditional(
-        stockItem: StockItem.price,
+        stockItem: StockItem.close,
         trend: Trend.increase,
         scope: 10,
         duration: 2));

@@ -101,10 +101,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       setState(() {
                         showSpinner = true;
                       });
-                      final user = _auth.signInWithEmailAndPassword(
+                      final user = await _auth.signInWithEmailAndPassword(
                           email: email.trim(), password: password);
-                      FirebaseUser fbUser =
-                          await FirebaseAuth.instance.currentUser();
+                      /*FirebaseUser fbUser =
+                          await FirebaseAuth.instance.currentUser();*/
 
                       if (user != null) {
                         Navigator.pushReplacementNamed(context, HomeScreen.id);
