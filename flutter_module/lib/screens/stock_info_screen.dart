@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttermodule/constants.dart';
+import 'package:fluttermodule/screens/choose_model_screen.dart';
 import 'package:fluttermodule/screens/home_screen.dart';
 import 'package:fluttermodule/services/stock_service.dart';
 import 'package:fluttermodule/components/price_panel.dart';
@@ -12,7 +13,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttermodule/models/watchlist_data.dart';
 import 'package:provider/provider.dart';
 
-List globalStockList;
+List<Stock> globalStockList;
+
 
 class StockInfoScreen extends StatefulWidget {
   static String id = 'stock_info_screen';
@@ -38,6 +40,7 @@ class _StockInfoScreenState extends State<StockInfoScreen> {
   var lastTradingDay;
 
   Future<StockList> futureStock; // create stock object
+  StockList stockList;
 
   @override
   void initState() {
@@ -46,9 +49,11 @@ class _StockInfoScreenState extends State<StockInfoScreen> {
     StockService stockService = new StockService();
     futureStock = stockService
         .fetchStock(symbol); // populate the object with data from the API
+
     //print("futureStock: " + futureStock.toString());
     uid = HomeScreen.uid;
   }
+
 
   void updateUI(dynamic stockData) {
     setState(() {
@@ -98,7 +103,19 @@ class _StockInfoScreenState extends State<StockInfoScreen> {
                 ),
               ),
               FlatButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    print('jiang');
+                    showModalBottomSheet(
+                        context: context,
+                        builder: (context) => SingleChildScrollView(
+                          child: Container(
+                            padding: EdgeInsets.only(
+                              bottom: MediaQuery.of(context).viewInsets.bottom),
+                            child: ChooseModelScreen(symbol:symbol),
+                            ),
+                          ),
+                        );
+                  },
                   child: Text(
                     'Apply Model',
                     style: kPriceTextStyle,

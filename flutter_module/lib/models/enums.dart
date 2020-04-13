@@ -1,5 +1,4 @@
 enum StockItem {
-  price,
   high,
   low,
   open,
@@ -33,3 +32,5 @@ extension on UserAction {
     return this.toString().split('.').last;
   }
 }
+
+

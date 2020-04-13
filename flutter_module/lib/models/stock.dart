@@ -8,6 +8,29 @@ class Stock {
 
   Stock({this.date, this.open, this.high, this.low, this.close, this.volume});
 
+  String getData(String type) {
+    if (type == 'date') {
+      return date;
+    }
+
+    if (type == 'open') {
+      return open;
+    }
+
+    if (type == 'high') {
+      return high;
+    }
+    if (type == 'low') {
+      return low;
+    }
+    if (type == 'close') {
+      return close;
+    }
+    if (type == 'volume') {
+      return volume;
+    }
+  }
+
   @override
   String toString() {
     return 'Date: ' +
@@ -27,9 +50,15 @@ class Stock {
 
 class StockList {
   // this object is just a list of stocks
-  final List list;
+  final List<Stock> list;
 
-  StockList({this.list});
+//  List list () {
+//    return _list;
+//  }
+
+  StockList(this.list);
+
+
 
   factory StockList.fromJson(Map<String, dynamic> json) {
     // parse the json into data we can use it
@@ -51,8 +80,10 @@ class StockList {
         volume: json['Time Series (Daily)'].values.toList()[i]['5. volume'],
       ));
     }
+
+
     return StockList(
-      list: stockList,
+      stockList,
     );
   }
 
