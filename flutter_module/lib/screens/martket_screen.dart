@@ -18,13 +18,17 @@ class _MarketScreenState extends State<MarketScreen> {
   Future dowJones;
   var nasVal;
   var dowVal;
-  // List<NewsListItem> newsList;
-  NewsListItem item;
+  List<Widget> newsList = new List();
+
 
   @override
   void initState() {
     getMarketVals();
     getNews();
+    newsList.add(new RaisedButton(
+      onPressed: _launchURL,
+      child: Text("Powered by News API", style: new TextStyle(decoration: TextDecoration.underline),),
+    ));
     super.initState();
   }
 
@@ -70,22 +74,22 @@ class _MarketScreenState extends State<MarketScreen> {
   }
 
   void updateNewsUI(dynamic newsData) {
-      var title = newsData[0]["title"];
-      var link = newsData[0]["url"];
-      var image = newsData[0]["urlToImage"];
-      item = new NewsListItem(title: title, link: link, image: image);
-//    for (int x = 0; x < 10; x++) { // get the first 10 articles
-//      var title = newsData[x]["title"];
-//      var link = newsData[x]["url"];
-//      var image = newsData[x]["urlToImage"];
-//      newsList.add(new NewsListItem(title: title, link: link, image: image));
-//    }
-//    print("news list: " + newsList.toString());
-
+    List<Widget> tempList;
+    for (int x = 0; x < 10; x++) { // get the first 10 articles
+      var title = newsData[x]["title"];
+      var link = newsData[x]["url"];
+      var image = newsData[x]["urlToImage"];
+      newsList.add(new NewsListItem(title: title, link: link, image: image));
+    }
+    print("news list: " + newsList.toString());
+    tempList.add(new RaisedButton(
+      onPressed: _launchURL,
+      child: Text("Powered by News API", style: new TextStyle(decoration: TextDecoration.underline),),
+    )); // source for our news
   setState(() {
-
   });
   }
+
 
   void updateUI(dynamic dowData, dynamic nasdaqData) {
     setState(() {
@@ -136,13 +140,7 @@ class _MarketScreenState extends State<MarketScreen> {
         Expanded(
             child: Center(
           child: ListView(
-            children: <Widget>[
-              item,
-              RaisedButton(
-                onPressed: _launchURL,
-                child: Text("Powered by News API", style: new TextStyle(decoration: TextDecoration.underline),),
-              ),
-            ],
+            children: newsList,
           ),
         )),
       ],
