@@ -9,7 +9,7 @@ class NewsListItem extends StatelessWidget {
    NewsListItem({
     @required this.title,
     @required this.link,
-    this.image,
+    @ required this.image,
   });
 
   @override
@@ -57,6 +57,10 @@ class NewsListItem extends StatelessWidget {
 
   _launchURL() async { // launches the web browser to go to the url
     var url = this.link;
+    if (url == null) {
+      url = 'www.newsapi.org';
+      return;
+    }
     if (await canLaunch(url)) {
       await launch(url, forceWebView: true,);
     } else {
