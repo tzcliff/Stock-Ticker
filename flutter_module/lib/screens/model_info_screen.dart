@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:fluttermodule/models/model.dart';
 import 'package:fluttermodule/constants.dart';
 import 'package:fluttermodule/models/conditional.dart';
-import 'package:fluttermodule/screens/add_model_screen.dart';
 import 'package:fluttermodule/components/icon_round_button.dart';
+import 'package:fluttermodule/models/model_data.dart';
+import 'package:provider/provider.dart';
 
 class ModelInfoScreen extends StatefulWidget {
   final Model model;
@@ -89,7 +90,11 @@ class _ModelInfoScreenState extends State<ModelInfoScreen> {
               IconRoundButton(
                 size: 45,
                 iconData: Icons.delete,
-                onPress: () {},
+                onPress: () {
+                  Provider.of<ModelData>(context, listen: false)
+                      .deleteModel(widget.model);
+                  Navigator.pop(context);
+                },
               ),
             ],
           ),

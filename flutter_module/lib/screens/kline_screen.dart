@@ -7,6 +7,7 @@ import 'package:fluttermodule/services/kline_bloc_provider_service.dart';
 import 'package:fluttermodule/kline/klineconstrants.dart';
 import 'package:fluttermodule/kline/klinemodel.dart';
 import 'package:fluttermodule/components/klinewidget.dart';
+import 'package:fluttermodule/screens/stock_info_screen.dart';
 
 class KlinePageWidget extends StatelessWidget {
   final KlineBloc bloc;
@@ -27,10 +28,7 @@ class KlinePageWidget extends StatelessWidget {
       bloc.getSingleScreenCandleCount(screenWidth);
       int offsetCount =
       ((offset.dx / screenWidth) * singleScreenCandleCount).toInt();
-      // print('offsetCount :$offsetCount length: ${bloc.klineCurrentList.length}');
-      if (offsetCount > bloc.klineCurrentList.length - 1) {
-        return;
-      }
+      if (offsetCount > bloc.klineCurrentList.length - 1) { return; }
       int index = bloc.klineCurrentList.length - 1 - offsetCount;
 
       if (index < bloc.klineCurrentList.length) {
@@ -155,5 +153,45 @@ class KlinePageWidget extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class _StockInfoScreenState extends State<StockInfoScreen> {
+  @override
+  Widget build(BuildContext context) {
+    KlinePageBloc bloc = KlinePageBloc();
+    return Scaffold(
+        body: SafeArea(
+          child: FloatingActionButton(
+            child: Icon(Icons.input),
+            onPressed: () {
+              Navigator.push(context, CupertinoPageRoute(builder: (context) {
+                return Scaffold(
+                    appBar: CupertinoNavigationBar(
+                      padding: EdgeInsetsDirectional.only(start: 0),
+                      leading: CupertinoButton(
+                        padding: EdgeInsets.all(0),
+                        child: Icon(Icons.arrow_back,color: Colors.white,),
+                        onPressed: () {
+                          if (Navigator.canPop(context)) {
+                            Navigator.pop(context);
+                          }
+                        },
+                      ),
+                      middle: Text('BTC-USDT',style: TextStyle(color: Colors.white),),
+                      backgroundColor: kBackgroundColor,
+                    ),
+                    body: Container(
+                      color: kBackgroundColor,
+                      child: ListView(
+                        children: <Widget>[
+                          KlinePageWidget(bloc),
+                        ],
+                      ),
+                    ));
+              }));
+            },
+          ),
+        ));
   }
 }
