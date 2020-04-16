@@ -11,6 +11,7 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 class HomeScreen extends StatefulWidget {
   static String id = 'home_screen';
   static String uid = '';
+  static String email = '';
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -39,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
         loggedInUser = user;
         HomeScreen.uid = loggedInUser.uid;
+        HomeScreen.email = loggedInUser.email;
         print(user.uid);
       }
     } catch (e) {}
