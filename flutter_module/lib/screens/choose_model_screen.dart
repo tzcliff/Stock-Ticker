@@ -28,11 +28,11 @@ class ChooseModelScreen extends StatelessWidget {
             onTap :  () async {
               print(model.name);
               BackTester backTester = BackTester(symbol: symbol, model: model);
-              List<dynamic> result = await backTester.backTest();
-              print(result);
+              List<Widget> result = await backTester.backTest();
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return ResultScreen(
                   result: result,
+                  userAction: model.action,
                 );
               }));
             },

@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttermodule/models/enums.dart';
 
 import '../constants.dart';
 
 class ResultScreen extends StatelessWidget {
-  final List result;
+  final List<Widget> result;
+  final UserAction userAction;
 
-  ResultScreen({@required this.result});
+  ResultScreen({@required this.result, @required this.userAction});
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +22,15 @@ class ResultScreen extends StatelessWidget {
             ],
           ),
         ),
+        Center(child: Text('User Action: ' + userAction.toString().split('.').last, style: kMainTextStyle)),
 
         Expanded(
+          child: ListView(
+            children: result,
+          )
+        )
+
+        /*Expanded(
           child: ListView.builder(
 
             itemCount: result.length,
@@ -48,7 +57,7 @@ class ResultScreen extends StatelessWidget {
               );
             },
           ),
-        ),
+        ),*/
       ]),
     );
   }
