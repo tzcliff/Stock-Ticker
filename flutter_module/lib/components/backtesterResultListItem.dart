@@ -19,7 +19,7 @@ class resultItem  extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Expanded(
-                child: Text(date)
+                child: Text(date, textAlign: TextAlign.center)
               ),
               Column(
                 children: <Widget>[
@@ -46,7 +46,7 @@ class resultItem  extends StatelessWidget {
                 child: new Column (
                   children: <Widget>[
                     new Text ('Strategy Validity: ', textAlign: TextAlign.left),
-                    new Text (whetherValid, textAlign: TextAlign.left),
+                    new Text (whetherValid, textAlign: TextAlign.left, style: TextStyle(color: (whetherValid == 'valid') ? Colors.green : Colors.red ),),
                   ],
                 ),
               ),
