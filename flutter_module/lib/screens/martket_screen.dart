@@ -75,7 +75,7 @@ class _MarketScreenState extends State<MarketScreen> {
 
   void updateNewsUI(dynamic newsData) {
     List<Widget> tempList;
-    tempList.add(new NewsListItem(title: "test", link: null));
+    //tempList.add(new NewsListItem(title: "test", link: null));
     for (int x = 0; x < 10; x++) { // get the first 10 articles
       var title = newsData[x]["title"];
       var link = newsData[x]["url"];

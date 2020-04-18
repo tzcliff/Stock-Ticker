@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:fluttermodule/components/backtesterResultListItem.dart';
 import 'package:fluttermodule/models/conditional.dart';
 import 'package:fluttermodule/models/enums.dart';
 import 'package:fluttermodule/models/model.dart';
@@ -11,13 +12,13 @@ class BackTester {
   String symbol;
   StockList stockList;
   Model model;
-  int stockCounts;
-  List<dynamic> finalResult=[];
+  List<Widget> finalResult=[];
+  UserAction userAction;
 
-  BackTester ({symbol, model, stockCounts = 1000}) {
+  BackTester ({symbol, model}) {
     this.symbol = symbol;
     this.model = model;
-    this.stockCounts = stockCounts;
+
   }
 
 
@@ -27,13 +28,14 @@ class BackTester {
     stockList = await stockService.fetchStock(symbol);
     print(stockList.list.length);
     List<Conditional> conditionalList = model.conditionals;
+    userAction = model.action;
 
 
 
     for (int c = 0; c < conditionalList.length; c++) {
 
-      List tempResult = resultInOneConditional(conditionalList[c]);
-      finalResult.add(tempResult);
+      List<Widget> tempResult = resultInOneConditional(conditionalList[c]);
+      finalResult.addAll(tempResult);
 
       /*if (c == 0) {
         finalResult = tempResult;
@@ -41,19 +43,19 @@ class BackTester {
 
 
     }
-    final commonDates = finalResult.fold<Set>(
+    /*final commonDates = finalResult.fold<Set>(
         finalResult.first.toSet(),
-            (a, b) => a.intersection(b.toSet()));
+            (a, b) => a.intersection(b.toSet()));*/
 
 
 
 
 
-    return commonDates.toList();
+    return finalResult;
   }
 
-  List<dynamic> resultInOneConditional (Conditional conditional) {
-    List<dynamic> result = [];
+  List<Widget> resultInOneConditional (Conditional conditional) {
+    List<Widget> result = [];
 
     StockItem stockItem = conditional.stockItem;
     Trend trend = conditional.trend;
@@ -68,8 +70,7 @@ class BackTester {
         if (i > normalStockList.length - 2 - duration) {
           break;
         }
-        //print(normalStockList[i].date);
-        //Stock stockOneday = stockList.list[i];
+
         int operatingDay;
         for (operatingDay = i + 1; operatingDay < i + duration + 1; operatingDay++) {
           //print(stockList.list[operatingDay].getData(priceType));
@@ -79,7 +80,11 @@ class BackTester {
           }
         }
         if (flag == true) {
-          result.add(normalStockList[operatingDay].date);
+          String buyPrice = normalStockList[operatingDay].getData(priceType);
+          String comparePrice = normalStockList[operatingDay+1].getData(priceType);
+          String whetherValid = measure(buyPrice, comparePrice, userAction);
+          String date = normalStockList[operatingDay].date;
+          result.add(resultItem(firstPrice: buyPrice, secondPrice: comparePrice, whetherValid: whetherValid, date: date));
         }
         flag = true;
 
@@ -100,7 +105,11 @@ class BackTester {
           }
         }
         if (flag == true) {
-          result.add(normalStockList[operatingDay].date);
+          String buyPrice = normalStockList[operatingDay].getData(priceType);
+          String comparePrice = normalStockList[operatingDay+1].getData(priceType);
+          String whetherValid = measure(buyPrice, comparePrice, userAction);
+          String date = normalStockList[operatingDay].date;
+          result.add(resultItem(firstPrice: buyPrice, secondPrice: comparePrice, whetherValid: whetherValid, date: date));
         }
         flag = true;
 
@@ -110,6 +119,22 @@ class BackTester {
     }
 
     return result;
+  }
+
+  String measure(String firstPrice, String secondPrice, UserAction userAction) {
+    if (userAction == UserAction.buy) {
+      if (double.parse(secondPrice) > double.parse(firstPrice)) {
+        return 'valid';
+      } else {
+        return 'invalid';
+      }
+    } else {
+      if (double.parse(secondPrice) > double.parse(firstPrice)) {
+        return 'invalid';
+      } else {
+        return 'valid';
+      }
+    }
   }
 
 
