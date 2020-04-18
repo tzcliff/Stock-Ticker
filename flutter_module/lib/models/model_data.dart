@@ -10,33 +10,38 @@ class ModelData extends ChangeNotifier {
     Model(name: 'Model 1', action: UserAction.buy, conditionals: [
       Conditional(
           stockItem: StockItem.close,
-          trend: Trend.decrease,
+          trend: Trend.down,
           scope: 10,
-          duration: 4)
+          duration: 4,
+          std: 1)
     ]),
     Model(name: 'Model 2', action: UserAction.sell, conditionals: [
       Conditional(
           stockItem: StockItem.open,
-          trend: Trend.decrease,
+          trend: Trend.down,
           scope: 10,
-          duration: 3),
+          duration: 3,
+          std: 2),
       Conditional(
           stockItem: StockItem.close,
-          trend: Trend.decrease,
+          trend: Trend.down,
           scope: 10,
-          duration: 4)
+          duration: 4,
+          std: 1)
     ]),
     Model(name: 'Model 3', action: UserAction.buy, conditionals: [
       Conditional(
           stockItem: StockItem.high,
-          trend: Trend.increase,
+          trend: Trend.up,
           scope: 10,
-          duration: 4),
+          duration: 4,
+          std: 1),
       Conditional(
           stockItem: StockItem.high,
-          trend: Trend.increase,
+          trend: Trend.up,
           scope: 10,
-          duration: 4),
+          duration: 4,
+          std: 1),
     ]),
   ];
   UnmodifiableListView<Model> get models {

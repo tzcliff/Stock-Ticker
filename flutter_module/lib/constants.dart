@@ -29,6 +29,9 @@ const kSearchButtonTextStyle = TextStyle(
   fontFamily: 'Baloo2',
 );
 
+const kConditionalDropdownTextStyle =
+    TextStyle(fontFamily: 'Baloo2', fontSize: 15);
+
 const kModelPageTextStyle = TextStyle(
   fontSize: 18,
   fontWeight: FontWeight.bold,
