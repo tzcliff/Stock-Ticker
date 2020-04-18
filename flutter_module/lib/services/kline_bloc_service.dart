@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:fluttermodule/services/kline_bloc_provider_service.dart';
-import 'package:fluttermodule/kline/klineDataManager.dart';
+import 'package:fluttermodule/kline/klinedatamanager.dart';
 import 'package:fluttermodule/kline/klinemodel.dart';
 import 'package:fluttermodule/kline/klineconstrants.dart';
 import 'package:rxdart/rxdart.dart';

@@ -1,167 +1,48 @@
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttermodule/services/kline_bloc_service.dart';
-import 'package:fluttermodule/services/kline_bloc_provider_service.dart';
+import 'package:fluttermodule/kline/klinepagewidget.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'package:fluttermodule/models/stock.dart';
 import 'package:fluttermodule/kline/klineconstrants.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
 import 'package:fluttermodule/kline/klinemodel.dart';
-import 'package:fluttermodule/components/klinewidget.dart';
-import 'package:fluttermodule/screens/stock_info_screen.dart';
 
-class KlinePageWidget extends StatelessWidget {
-  final KlineBloc bloc;
-  KlinePageWidget(this.bloc);
+import 'package:http/http.dart' as http;
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Offset lastPoint;
-    bool isScale = false;
-    bool isLongPress = false;
-    bool isHorizontalDrag = false;
-    double screenWidth = MediaQuery.of(context).size.width;
-    _showCrossWidget(Offset offset) {
-      if (isScale || isHorizontalDrag) {
-        return;
-      }
-      isLongPress = true;
-      int singleScreenCandleCount =
-      bloc.getSingleScreenCandleCount(screenWidth);
-      int offsetCount =
-      ((offset.dx / screenWidth) * singleScreenCandleCount).toInt();
-      if (offsetCount > bloc.klineCurrentList.length - 1) { return; }
-      int index = bloc.klineCurrentList.length - 1 - offsetCount;
-
-      if (index < bloc.klineCurrentList.length) {
-        KLineModel klinemodel = bloc.klineCurrentList[index];
-        klinemodel.isShowCandleInfo = true;
-        RenderBox candleWidgetRenderBox =
-        bloc.candleWidgetKey.currentContext.findRenderObject();
-        Offset candleWidgetOriginOffset =
-        candleWidgetRenderBox.localToGlobal(Offset.zero);
-
-        RenderBox currentWidgetRenderBox = context.findRenderObject();
-        Offset currentWidgetOriginOffset =
-        currentWidgetRenderBox.localToGlobal(Offset.zero);
-
-        RenderBox volumeWidgetRenderBox = bloc.volumeWidgetKey.currentContext.findRenderObject();
-
-        klinemodel.candleWidgetOriginY = candleWidgetOriginOffset.dy - currentWidgetOriginOffset.dy;
-        klinemodel.gridTotalHeight = candleWidgetRenderBox.size.height + volumeWidgetRenderBox.size.height;
-        bloc.marketSinkAdd(klinemodel);
-      }
-    }
-
-    _hiddenCrossWidget() {
-      isLongPress = false;
-      bloc.marketSinkAdd(KLineModel(null, isShowCandleInfo: false));
-    }
-
-    _horizontalDrag(Offset offset) {
-      if (isScale || isLongPress) { return; }
-      isHorizontalDrag = true;
-      double offsetX = offset.dx - lastPoint.dx;
-      int singleScreenCandleCount =
-      bloc.getSingleScreenCandleCount(screenWidth);
-
-      int offsetCount = ((offsetX / screenWidth) * singleScreenCandleCount).toInt();
-      if (offsetCount == 0) { return; }
-      int firstScreenNum = (singleScreenCandleCount * bloc.getFirstScreenScale()).toInt();
-      if (bloc.klineTotalList.length > firstScreenNum) {
-        int currentOffsetCount = bloc.toIndex + offsetCount;
-        int totalListLength = bloc.klineTotalList.length;
-        currentOffsetCount = min(currentOffsetCount, totalListLength);
-        if (currentOffsetCount < firstScreenNum) { return; }
-        int fromIndex = 0;
-
-        if (currentOffsetCount > singleScreenCandleCount) { fromIndex = (currentOffsetCount - singleScreenCandleCount); }
-        lastPoint = offset;
-      }
-    }
-
-    _scaleUpdate(double scale) {
-      if (isHorizontalDrag || isLongPress) { return; }
-      isScale = true;
-      if (scale > 1 && (scale - 1) > 0.03) { scale = 1.03; }
-      else if (scale < 1 && (1 - scale) > 0.03) { scale = 0.97; }
-      double candlestickWidth = scale * bloc.candlestickWidth;
-      bloc.setCandlestickWidth(candlestickWidth);
-      double count = (screenWidth - bloc.candlestickWidth) / (kCandlestickGap + bloc.candlestickWidth);
-      int currentScreenCountNum = count.toInt();
-
-      int toIndex = bloc.toIndex;
-      int fromIndex = toIndex - currentScreenCountNum;
-      fromIndex = max(0, fromIndex);
-      
-      bloc.getSubKlineList(fromIndex, toIndex);
-    }
-
-    return KlineBlocProvider<KlineBloc>(
-      bloc: bloc,
-      child: GestureDetector(
-        onTap: () {
-          if (isLongPress) {
-            _hiddenCrossWidget();
-          }
-        },
-
-        onLongPressStart: (longPressDragStartDetail) {
-          _showCrossWidget(longPressDragStartDetail.globalPosition);
-        },
-        onLongPressMoveUpdate: (longPressDragUpdateDetail) {
-          _showCrossWidget(longPressDragUpdateDetail.globalPosition);
-        },
-        
-        onHorizontalDragDown: (horizontalDragDown) {
-          if (isLongPress) {
-            _hiddenCrossWidget();
-          }
-          lastPoint = horizontalDragDown.globalPosition;
-        },
-        onHorizontalDragUpdate: (details) {
-          _horizontalDrag(details.globalPosition);
-        },
-        onHorizontalDragEnd: (_) {
-          isHorizontalDrag = false;
-        },
-        onHorizontalDragCancel: () {
-          isHorizontalDrag = false;
-        },
-        onScaleStart: (_) {
-          isScale = true;
-        },
-        
-        onScaleUpdate: (details) {
-          if (isLongPress) {
-            _hiddenCrossWidget();
-          }
-          _scaleUpdate(details.scale);
-        },
-        onScaleEnd: (_) {
-          isScale = false;
-        },
-
-        child: StreamBuilder(
-          stream: bloc.klineListStream,
-          builder:
-              (BuildContext context, AsyncSnapshot<List<KLineModel>> snapshot) {
-            List<KLineModel> listData = snapshot.data;
-            if (listData != null) {
-              bloc.setScreenWidth(screenWidth);
-            }
-            return KLineWidget();
-          },
-        ),
-      ),
+    return CupertinoApp(
+      title: 'Kline Demo',
+      home: MyHomePage(title: 'Kline Home Page'),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
 
-class _StockInfoScreenState extends State<StockInfoScreen> {
+class MyHomePage extends StatefulWidget {
+  MyHomePage({Key key, this.title}) : super(key: key);
+
+  final String title;
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     KlinePageBloc bloc = KlinePageBloc();
     return Scaffold(
-        body: SafeArea(
+        appBar: CupertinoNavigationBar(
+          middle: Text(widget.title),
+        ),
+        body: Center(
           child: FloatingActionButton(
             child: Icon(Icons.input),
             onPressed: () {
@@ -178,7 +59,7 @@ class _StockInfoScreenState extends State<StockInfoScreen> {
                           }
                         },
                       ),
-                      middle: Text('BTC-USDT',style: TextStyle(color: Colors.white),),
+                      middle: Text('BTC-USDT', style: TextStyle(color: Colors.white),),
                       backgroundColor: kBackgroundColor,
                     ),
                     body: Container(
@@ -193,5 +74,49 @@ class _StockInfoScreenState extends State<StockInfoScreen> {
             },
           ),
         ));
+  }
+}
+
+Future<String> loadAsset() async {
+  return await rootBundle.loadString('json/btcusdt.json');
+}
+
+Future<StockList> getIPAddress(String period) async {
+  if (period == null) { period = '1day'; }
+  var url = 'https://api.huobi.io/market/history/kline?period=$period&size=449&symbol=btcusdt';
+  StockList result;
+  var response = await http.get(url);
+  if (response.statusCode == HttpStatus.ok) { result = response.body; }
+  else { print('Failed getting IP address'); }
+  return result;
+}
+
+class KlinePageBloc extends KlineBloc {
+  @override
+  void periodSwitch(String period) {
+    _getData(period);
+    super.periodSwitch(period);
+  }
+
+  @override
+  void initData() {
+    _getData('1day');
+    super.initData();
+  }
+
+  _getData(String period) {
+    this.showLoadingSinkAdd(true);
+    Future<StockList> futureStock = getIPAddress('$period');
+    futureStock.then((result) {
+      final parseJson = json.decode(result);
+      StockList stockList = StockList.fromJson(parseJson);
+      List<KLineModel> list = List<KLineModel>();
+      for (Stock stock in stockList.data) {
+        KLineModel market = KLineModel(stock);
+        list.add(market);
+      }
+      this.showLoadingSinkAdd(false);
+      this.updateDataList(list);
+    });
   }
 }
