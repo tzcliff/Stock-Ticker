@@ -6,6 +6,7 @@ import 'package:fluttermodule/models/model.dart';
 import 'package:fluttermodule/models/stock.dart';
 import 'package:fluttermodule/screens/add_model_screen.dart';
 import 'package:fluttermodule/services/stock_service.dart';
+import 'dart:math';
 
 class BackTester {
   String symbol;
@@ -21,13 +22,14 @@ class BackTester {
 
   Future<List<dynamic>> backTest() async {
     StockService stockService = StockService();
-    stockList = await stockService.fetchStock(symbol);
-    print(stockList.list.length);
+    stockList = await stockService.fetchStockFull(symbol);
+    print('jiang' + stockList.list.length.toString());
     List<Conditional> conditionalList = model.conditionals;
     userAction = model.action;
 
     for (int c = 0; c < conditionalList.length; c++) {
-      List<Widget> tempResult = resultInOneConditional(conditionalList[c]);
+      List<Widget> tempResult = await resultInOneConditional(conditionalList[c]);
+      print('temp:' + tempResult.length.toString());
       finalResult.addAll(tempResult);
 
       /*if (c == 0) {
@@ -42,20 +44,24 @@ class BackTester {
     return finalResult;
   }
 
-  List<Widget> resultInOneConditional(Conditional conditional) {
+  Future<List<Widget>> resultInOneConditional (Conditional conditional) async {
     List<Widget> result = [];
-
     StockItem stockItem = conditional.stockItem;
     Trend trend = conditional.trend;
     // double scope = firstConditional.scope;
     int duration = conditional.duration;
+    double numberSTD = conditional.std;
 
     String priceType = stockItem.toString().split('.').last;
     bool flag = true;
+
     List<Stock> normalStockList = stockList.list.reversed.toList();
+    double std = stdCaculate(average(normalStockList, priceType), normalStockList, priceType);
+
     if (trend == Trend.up) {
       for (int i = 0; i < stockList.list.length; i++) {
-        if (i > normalStockList.length - 2 - duration) {
+
+        if (i > normalStockList.length - 3 - duration) {
           break;
         }
 
@@ -71,7 +77,11 @@ class BackTester {
             break;
           }
         }
+        if ((double.parse(normalStockList[operatingDay].getData(priceType)) - double.parse(normalStockList[i].getData(priceType))) < numberSTD * std) {
+          flag = false;
+        }
         if (flag == true) {
+
           String buyPrice = normalStockList[operatingDay].getData(priceType);
           String comparePrice =
               normalStockList[operatingDay + 1].getData(priceType);
@@ -88,7 +98,7 @@ class BackTester {
       //print(result);
     } else {
       for (int i = 0; i < stockList.list.length; i++) {
-        if (i > normalStockList.length - 2 - duration) {
+        if (i > normalStockList.length - 3 - duration) {
           break;
         }
         int operatingDay;
@@ -102,6 +112,9 @@ class BackTester {
             flag = false;
             break;
           }
+        }
+        if ((double.parse(normalStockList[i].getData(priceType)) - double.parse(normalStockList[operatingDay].getData(priceType))) < numberSTD * std) {
+          flag = false;
         }
         if (flag == true) {
           String buyPrice = normalStockList[operatingDay].getData(priceType);
@@ -123,6 +136,8 @@ class BackTester {
     return result;
   }
 
+
+
   String measure(String firstPrice, String secondPrice, UserAction userAction) {
     if (userAction == UserAction.buy) {
       if (double.parse(secondPrice) > double.parse(firstPrice)) {
@@ -137,5 +152,21 @@ class BackTester {
         return 'valid';
       }
     }
+  }
+
+  double average(List<Stock> stocklist, String priceType) {
+    double sum = 0;
+    for (int i = 0; i < stocklist.length; i++) {
+      sum += double.parse(stocklist[i].getData(priceType));
+    }
+    return sum / stocklist.length;
+  }
+
+  double stdCaculate(double avg, List<Stock> stocklist, String priceType) {
+    double sum = 0;
+    for (int i = 0; i < stocklist.length; i++) {
+      sum += pow(double.parse(stocklist[i].getData(priceType)) - avg, 2);
+    }
+    return sqrt(sum / stocklist.length);
   }
 }

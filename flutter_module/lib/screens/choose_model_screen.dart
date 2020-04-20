@@ -29,6 +29,7 @@ class ChooseModelScreen extends StatelessWidget {
               print(model.name);
               BackTester backTester = BackTester(symbol: symbol, model: model);
               List<Widget> result = await backTester.backTest();
+              print(result.length);
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return ResultScreen(
                   result: result,
