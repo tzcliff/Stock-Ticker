@@ -13,7 +13,7 @@ class ModelData extends ChangeNotifier {
           trend: Trend.down,
           scope: 10,
           duration: 4,
-          std: 1)
+          std: 0.1)
     ]),
     Model(name: 'Model 2', action: UserAction.sell, conditionals: [
       Conditional(
@@ -27,7 +27,7 @@ class ModelData extends ChangeNotifier {
           trend: Trend.down,
           scope: 10,
           duration: 4,
-          std: 1)
+          std: 0.1)
     ]),
     Model(name: 'Model 3', action: UserAction.buy, conditionals: [
       Conditional(
@@ -41,7 +41,7 @@ class ModelData extends ChangeNotifier {
           trend: Trend.up,
           scope: 10,
           duration: 4,
-          std: 1),
+          std: 0.1),
     ]),
   ];
   UnmodifiableListView<Model> get models {
