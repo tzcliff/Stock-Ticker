@@ -92,7 +92,7 @@ class ModelPeriodDropdown extends StatelessWidget {
 
 class ModelSTDDropdown extends StatelessWidget {
   final Function onChange;
-  final int selected;
+  final double selected;
 
   const ModelSTDDropdown({
     Key key,
@@ -101,17 +101,17 @@ class ModelSTDDropdown extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    List<DropdownMenuItem<int>> dropDownItems = [];
+    List<DropdownMenuItem<double>> dropDownItems = [];
     for (int i = 1; i <= 5; i++) {
       dropDownItems.add(DropdownMenuItem(
-        value: i,
+        value: i / 10,
         child: Text(
-          i.toString() + ' STDs',
+            (i / 10).toString() + ' STDs',
           style: kConditionalDropdownTextStyle,
         ),
       ));
     }
-    return DropdownButton<int>(
+    return DropdownButton<double>(
       value: selected,
       items: dropDownItems,
       onChanged: this.onChange,
