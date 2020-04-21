@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:fluttermodule/models/enums.dart';
+import 'package:fluttermodule/constants.dart';
 
 class ModelItemDropdown extends StatelessWidget {
   final Function onChange;
@@ -16,7 +17,10 @@ class ModelItemDropdown extends StatelessWidget {
     List<DropdownMenuItem<StockItem>> dropDownItems = [];
     StockItem.values.forEach((item) {
       dropDownItems.add(DropdownMenuItem(
-        child: Text(item.toString().split('.').last),
+        child: Text(
+          item.toString().split('.').last,
+          style: kConditionalDropdownTextStyle,
+        ),
         value: item,
       ));
     });
@@ -42,7 +46,10 @@ class ModelTrendDropdown extends StatelessWidget {
     List<DropdownMenuItem<Trend>> dropDownItems = [];
     Trend.values.forEach((item) {
       dropDownItems.add(DropdownMenuItem(
-        child: Text(item.toString().split('.').last),
+        child: Text(
+          item.toString().split('.').last,
+          style: kConditionalDropdownTextStyle,
+        ),
         value: item,
       ));
     });
@@ -69,10 +76,42 @@ class ModelPeriodDropdown extends StatelessWidget {
     for (int i = 1; i <= 30; i++) {
       dropDownItems.add(DropdownMenuItem(
         value: i,
-        child: Text(i.toString() + ' days'),
+        child: Text(
+          i.toString() + ' days',
+          style: kConditionalDropdownTextStyle,
+        ),
       ));
     }
     return DropdownButton<int>(
+      value: selected,
+      items: dropDownItems,
+      onChanged: this.onChange,
+    );
+  }
+}
+
+class ModelSTDDropdown extends StatelessWidget {
+  final Function onChange;
+  final double selected;
+
+  const ModelSTDDropdown({
+    Key key,
+    this.onChange,
+    this.selected,
+  }) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    List<DropdownMenuItem<double>> dropDownItems = [];
+    for (int i = 1; i <= 5; i++) {
+      dropDownItems.add(DropdownMenuItem(
+        value: i / 10,
+        child: Text(
+            (i / 10).toString() + ' STDs',
+          style: kConditionalDropdownTextStyle,
+        ),
+      ));
+    }
+    return DropdownButton<double>(
       value: selected,
       items: dropDownItems,
       onChanged: this.onChange,
@@ -94,7 +133,10 @@ class ModelActionDropdown extends StatelessWidget {
     List<DropdownMenuItem<UserAction>> dropDownItems = [];
     UserAction.values.forEach((item) {
       dropDownItems.add(DropdownMenuItem(
-        child: Text(item.toString().split('.').last),
+        child: Text(
+          item.toString().split('.').last,
+          style: kConditionalDropdownTextStyle,
+        ),
         value: item,
       ));
     });

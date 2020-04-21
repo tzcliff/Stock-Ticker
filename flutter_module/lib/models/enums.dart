@@ -3,7 +3,6 @@ enum StockItem {
   low,
   open,
   close,
-  std,
 }
 
 extension on StockItem {
@@ -13,8 +12,8 @@ extension on StockItem {
 }
 
 enum Trend {
-  increase,
-  decrease,
+  up,
+  down,
 }
 
 extension on Trend {

@@ -29,9 +29,10 @@ class _AddModelScreenState extends State<AddModelScreen> {
   void createConditional() {
     conditionals.add(Conditional(
         stockItem: StockItem.close,
-        trend: Trend.increase,
+        trend: Trend.up,
         scope: 10,
-        duration: 2));
+        duration: 2,
+        std: 0.1));
     print(conditionals[conditionals.length - 1].duration.toString());
     setState(() {
       listTiles.add(ConditionalListTile(index: conditionals.length - 1));
@@ -143,14 +144,21 @@ class _ConditionalListTileState extends State<ConditionalListTile> {
             });
           },
         ),
-        title: ModelTrendDropdown(
-          selected: conditionals[widget.index].trend,
-          onChange: (value) {
-            setState(() {
-              conditionals[widget.index].trend = value;
-            });
-          },
-        ),
+        title: Row(children: [
+          ModelTrendDropdown(
+            selected: conditionals[widget.index].trend,
+            onChange: (value) {
+              setState(() {
+                conditionals[widget.index].trend = value;
+              });
+            },
+          ),
+          ModelSTDDropdown(
+              selected: conditionals[widget.index].std,
+              onChange: (value) {
+                conditionals[widget.index].std = value;
+              }),
+        ]),
         trailing: ModelPeriodDropdown(
           selected: conditionals[widget.index].duration,
           onChange: (value) {
