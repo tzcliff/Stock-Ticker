@@ -1,3 +1,5 @@
+import 'package:fluttermodule/services/network_service.dart';
+import 'package:fluttermodule/api_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttermodule/services/kline_bloc_service.dart';
@@ -9,39 +11,21 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:fluttermodule/kline/klinemodel.dart';
-
 import 'package:http/http.dart' as http;
 
-void main() => runApp(MyApp());
+class KLineScreen extends StatefulWidget {
+  KLineScreen({Key key, this.symbol}) : super(key: key);
+  final String symbol;
 
-class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return CupertinoApp(
-      title: 'Kline Demo',
-      home: MyHomePage(title: 'Kline Home Page'),
-      debugShowCheckedModeBanner: false,
-    );
-  }
+  _KLineScreen createState() => _KLineScreen();
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
+class _KLineScreen extends State<KLineScreen> {
   @override
   Widget build(BuildContext context) {
-    KlinePageBloc bloc = KlinePageBloc();
+    KlinePageBloc bloc = KlinePageBloc(widget.symbol);
     return Scaffold(
-        appBar: CupertinoNavigationBar(
-          middle: Text(widget.title),
-        ),
         body: Center(
           child: FloatingActionButton(
             child: Icon(Icons.input),
@@ -59,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           }
                         },
                       ),
-                      middle: Text('BTC-USDT', style: TextStyle(color: Colors.white),),
+                      middle: Text(widget.symbol, style: TextStyle(color: Colors.white),),
                       backgroundColor: kBackgroundColor,
                     ),
                     body: Container(
@@ -77,43 +61,49 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-Future<String> loadAsset() async {
-  return await rootBundle.loadString('json/btcusdt.json');
-}
+Future<StockList> fetchStock(String period, String symbol) async {
+  // a future is a Dart class for async operations, a future represents a potential value OR error that will be available at some future time
+  var url = 'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=' +
+      symbol +
+      '&interval=' +
+      period +
+      '&apikey=' +
+      kAlphaStockAPIKey;
 
-Future<StockList> getIPAddress(String period) async {
-  if (period == null) { period = '1day'; }
-  var url = 'https://api.huobi.io/market/history/kline?period=$period&size=449&symbol=btcusdt';
-  StockList result;
   var response = await http.get(url);
-  if (response.statusCode == HttpStatus.ok) { result = response.body; }
-  else { print('Failed getting IP address'); }
-  return result;
+  if (response.statusCode == 200) {
+    return StockList.fromJsonWithPeriod(json.decode(response.body), period);
+  }
+  else {
+    print(response.statusCode);
+    return null;
+  }
 }
 
 class KlinePageBloc extends KlineBloc {
+  KlinePageBloc(this.symbol);
+  final String symbol;
+
   @override
   void periodSwitch(String period) {
-    _getData(period);
+    _getData(period, symbol);
     super.periodSwitch(period);
   }
 
   @override
   void initData() {
-    _getData('1day');
+    _getData('60min', symbol);
     super.initData();
   }
 
-  _getData(String period) {
+  _getData(String period, String symbol) {
     this.showLoadingSinkAdd(true);
-    Future<StockList> futureStock = getIPAddress('$period');
-    futureStock.then((result) {
-      final parseJson = json.decode(result);
-      StockList stockList = StockList.fromJson(parseJson);
+    Future<StockList> futureStock = fetchStock(period, symbol);
+    futureStock.then((stockList) {
       List<KLineModel> list = List<KLineModel>();
-      for (Stock stock in stockList.data) {
-        KLineModel market = KLineModel(stock);
-        list.add(market);
+      for (Stock stock in stockList.list) {
+        KLineModel klinemodel = KLineModel(stock);
+        list.add(klinemodel);
       }
       this.showLoadingSinkAdd(false);
       this.updateDataList(list);

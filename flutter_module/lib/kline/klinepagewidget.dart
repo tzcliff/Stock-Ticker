@@ -30,10 +30,8 @@ class KlinePageWidget extends StatelessWidget {
       if (index < bloc.klineCurrentList.length) {
         KLineModel klinemodel = bloc.klineCurrentList[index];
         klinemodel.isShowCandleInfo = true;
-        RenderBox candleWidgetRenderBox =
-        bloc.candleWidgetKey.currentContext.findRenderObject();
-        Offset candleWidgetOriginOffset =
-        candleWidgetRenderBox.localToGlobal(Offset.zero);
+        RenderBox candleWidgetRenderBox = bloc.candleWidgetKey.currentContext.findRenderObject();
+        Offset candleWidgetOriginOffset = candleWidgetRenderBox.localToGlobal(Offset.zero);
 
         RenderBox currentWidgetRenderBox = context.findRenderObject();
         Offset currentWidgetOriginOffset = currentWidgetRenderBox.localToGlobal(Offset.zero);

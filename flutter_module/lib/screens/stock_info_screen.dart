@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:fluttermodule/constants.dart';
 import 'package:fluttermodule/screens/choose_model_screen.dart';
 import 'package:fluttermodule/screens/home_screen.dart';
+import 'package:fluttermodule/screens/kline_screen.dart';
 import 'package:fluttermodule/services/stock_service.dart';
 import 'package:fluttermodule/components/price_panel.dart';
 import 'package:fluttermodule/models/stock.dart';
@@ -132,6 +134,21 @@ class _StockInfoScreenState extends State<StockInfoScreen> {
                   size: 30,
                 ),
               ),
+              FlatButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) {
+                      return CupertinoApp(
+                        title: 'Kline Demo',
+                        home: KLineScreen(symbol: symbol),
+                        debugShowCheckedModeBanner: false,
+                      );
+                    }));
+                  },
+                  child: Text(
+                    'K Line',
+                    style: kPriceTextStyle,
+                  )),
             ],
           ),
           Expanded(

@@ -8,16 +8,13 @@ import 'package:fluttermodule/kline/klineconstrants.dart';
 import 'package:rxdart/rxdart.dart';
 
 class KlineBloc extends KlineBlocBase {
-  BehaviorSubject<List<KLineModel>> _klineListSubject =
-  BehaviorSubject<List<KLineModel>>();
+  BehaviorSubject<List<KLineModel>> _klineListSubject = BehaviorSubject<List<KLineModel>>();
   Sink<List<KLineModel>> get _klineListSink => _klineListSubject.sink;
   Stream<List<KLineModel>> get klineListStream => _klineListSubject.stream;
   
-  PublishSubject<List<KLineModel>> _klineCurrentListSubject =
-  PublishSubject<List<KLineModel>>();
+  PublishSubject<List<KLineModel>> _klineCurrentListSubject = PublishSubject<List<KLineModel>>();
   Sink<List<KLineModel>> get _currentKlineListSink => _klineCurrentListSubject.sink;
-  Stream<List<KLineModel>> get currentKlineListStream =>
-      _klineCurrentListSubject.stream;
+  Stream<List<KLineModel>> get currentKlineListStream => _klineCurrentListSubject.stream;
   
   PublishSubject<KLineModel> _klineMarketSubject = PublishSubject<KLineModel>();
   Sink<KLineModel> get _klineMarketSink => _klineMarketSubject.sink;
@@ -70,8 +67,7 @@ class KlineBloc extends KlineBlocBase {
   void updateDataList(List<KLineModel> dataList) {
     if (dataList != null && dataList.length > 0) {
       klineTotalList.clear();
-      klineTotalList =
-          KlineDataManager.calculateKlineData(YKChartType.MA, dataList);
+      klineTotalList = KlineDataManager.calculateKlineData(YKChartType.MA, dataList);
       _klineListSink.add(klineTotalList);
     }
   }

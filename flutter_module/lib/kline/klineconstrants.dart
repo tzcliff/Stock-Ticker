@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 const double kPeriodHeight = 40;
 const double kPeriodAspectRatio = 375 / kPeriodHeight;
-const String kDefaultPeriod = '1day';
-const List<String> kPeriodList = ['1min', '5min', '15min', '30min', '60min', '1day'];
-const kDefaultPeriodIndex = 5;
+const String kDefaultPeriod = '60min';
+const List<String> kPeriodList = ['1min', '5min', '15min', '30min', '60min'];
+const kDefaultPeriodIndex = 4;
 
 const double kCandlestickWidth = 7.0;
 const double kWickWidth = 1.0;
@@ -63,7 +63,5 @@ const double kCandleInfoHeight = 137;
 enum YKMAType {
   MA5,
   MA10,
-  MA30,
-  VMA5,
-  VMA10
+  MA30
 }
