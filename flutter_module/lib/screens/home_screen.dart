@@ -23,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseUser loggedInUser;
 
-  final List<Widget> _pages = [
+  List<Widget> _pages = [
     MarketScreen(),
     WatchlistScreen(),
     ModelScreen(),

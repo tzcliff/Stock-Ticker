@@ -33,7 +33,6 @@ class _AddModelScreenState extends State<AddModelScreen> {
         scope: 10,
         duration: 2,
         std: 0.1));
-    print(conditionals[conditionals.length - 1].duration.toString());
     setState(() {
       listTiles.add(ConditionalListTile(index: conditionals.length - 1));
     });
@@ -136,6 +135,7 @@ class _ConditionalListTileState extends State<ConditionalListTile> {
   Widget build(BuildContext context) {
     return Container(
       child: ListTile(
+        dense: true,
         leading: ModelItemDropdown(
           selected: conditionals[widget.index].stockItem,
           onChange: (value) {
