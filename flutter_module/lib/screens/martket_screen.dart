@@ -13,7 +13,6 @@ class MarketScreen extends StatefulWidget {
 }
 
 class _MarketScreenState extends State<MarketScreen> {
-  bool showSpinner = false;
   Future nasdaq;
   Future dowJones;
   var nasVal;
@@ -30,11 +29,9 @@ class _MarketScreenState extends State<MarketScreen> {
 
   @override
   void initState() {
-    showSpinner = false;
+    super.initState();
     getMarketVals();
     getNews();
-
-    super.initState();
   }
 
   void getNews() async {
@@ -127,34 +124,31 @@ class _MarketScreenState extends State<MarketScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ModalProgressHUD(
-        inAsyncCall: showSpinner,
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: ListView(
-                children: <Widget>[
-                  IndexItem(
-                    symbol: 'Dow Jones',
-                    price: dowVal,
-                  ),
-                  IndexItem(
-                    symbol: 'Nasdaq',
-                    price: nasVal,
-                  )
-                ],
+    return Column(
+      children: <Widget>[
+        Expanded(
+          child: ListView(
+            children: <Widget>[
+              IndexItem(
+                symbol: 'Dow Jones',
+                price: dowVal,
               ),
-            ),
-            Expanded(
-                child: Center(
-              child: ListView(
-                children: newsList,
-              ),
-            )),
-          ],
+              IndexItem(
+                symbol: 'Nasdaq',
+                price: nasVal,
+              )
+            ],
+          ),
         ),
-      ),
+        Expanded(
+            child: Center(
+                child: ListView.builder(
+          itemCount: newsList.length,
+          itemBuilder: (context, index) {
+            return newsList[index];
+          },
+        ))),
+      ],
     );
   }
 }
