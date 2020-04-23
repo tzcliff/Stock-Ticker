@@ -1,61 +1,80 @@
 import 'package:flutter/material.dart';
+import 'package:fluttermodule/constants.dart';
 
-class resultItem  extends StatelessWidget {
+class ResultItem extends StatelessWidget {
   String firstPrice;
   String secondPrice;
   String whetherValid;
   String date;
 
-  resultItem({@required this.firstPrice, @required this.secondPrice, @required this.whetherValid, @required this.date});
+  ResultItem(
+      {@required this.firstPrice,
+      @required this.secondPrice,
+      @required this.whetherValid,
+      @required this.date});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5),
+      padding: const EdgeInsets.symmetric(vertical: 2),
       child: Material(
         elevation: 5,
-        child: SafeArea(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Expanded(
-                child: Text(date, textAlign: TextAlign.center)
-              ),
-              Column(
-                children: <Widget>[
-                  Container (
-                    padding: const EdgeInsets.all(16.0),
-                    child: new Column (
-                      children: <Widget>[
-                        new Text ('Buy/Sell Price: '+ firstPrice, textAlign: TextAlign.left),
-                      ],
-                    ),
+        color: Colors.tealAccent.shade400,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Container(
+                margin: EdgeInsets.only(left: 8),
+                child: Text(
+                  date,
+                  style: kBottomBarTextStyle,
+                )),
+            Column(
+              children: <Widget>[
+                Container(
+                  padding: const EdgeInsets.all(6.0),
+                  child: new Column(
+                    children: <Widget>[
+                      new Text(
+                        'Buy/Sell Price: ' + firstPrice,
+                        textAlign: TextAlign.left,
+                        style: kModelPageTextStyle,
+                      ),
+                    ],
                   ),
-                  Container (
-                    padding: const EdgeInsets.all(16.0),
-                    child: new Column (
-                      children: <Widget>[
-                        new Text ('Next Day Price:' + secondPrice, textAlign: TextAlign.left),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              Container (
-                padding: const EdgeInsets.all(16.0),
-                child: new Column (
-                  children: <Widget>[
-                    new Text ('Strategy Validity: ', textAlign: TextAlign.left),
-                    new Text (whetherValid, textAlign: TextAlign.left, style: TextStyle(color: (whetherValid == 'valid') ? Colors.green : Colors.red ),),
-                  ],
                 ),
-              ),
-
-            ],
-          ),
+                Container(
+                  padding: const EdgeInsets.all(6.0),
+                  child: new Column(
+                    children: <Widget>[
+                      new Text(
+                        'Next Day Price:' + secondPrice,
+                        textAlign: TextAlign.left,
+                        style: kModelPageTextStyle,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Container(
+              padding: const EdgeInsets.all(6.0),
+              child: (whetherValid == 'valid')
+                  ? Icon(
+                      Icons.check,
+                      size: 30,
+                      color: Colors.lightGreenAccent,
+                    )
+                  : Icon(
+                      Icons.clear,
+                      size: 30,
+                      color: Colors.redAccent,
+                    ),
+            ),
+          ],
         ),
       ),
-    );;
+    );
+    ;
   }
-
 }

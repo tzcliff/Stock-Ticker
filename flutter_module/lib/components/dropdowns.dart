@@ -106,7 +106,7 @@ class ModelSTDDropdown extends StatelessWidget {
       dropDownItems.add(DropdownMenuItem(
         value: i / 10,
         child: Text(
-            (i / 10).toString() + ' STDs',
+          (i / 10).toString() + ' STD',
           style: kConditionalDropdownTextStyle,
         ),
       ));

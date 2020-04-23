@@ -28,7 +28,8 @@ class BackTester {
     userAction = model.action;
 
     for (int c = 0; c < conditionalList.length; c++) {
-      List<Widget> tempResult = await resultInOneConditional(conditionalList[c]);
+      List<Widget> tempResult =
+          await resultInOneConditional(conditionalList[c]);
       print('temp:' + tempResult.length.toString());
       finalResult.addAll(tempResult);
 
@@ -44,7 +45,7 @@ class BackTester {
     return finalResult;
   }
 
-  Future<List<Widget>> resultInOneConditional (Conditional conditional) async {
+  Future<List<Widget>> resultInOneConditional(Conditional conditional) async {
     List<Widget> result = [];
     StockItem stockItem = conditional.stockItem;
     Trend trend = conditional.trend;
@@ -56,11 +57,11 @@ class BackTester {
     bool flag = true;
 
     List<Stock> normalStockList = stockList.list.reversed.toList();
-    double std = stdCaculate(average(normalStockList, priceType), normalStockList, priceType);
+    double std = stdCaculate(
+        average(normalStockList, priceType), normalStockList, priceType);
 
     if (trend == Trend.up) {
       for (int i = 0; i < stockList.list.length; i++) {
-
         if (i > normalStockList.length - 3 - duration) {
           break;
         }
@@ -77,17 +78,18 @@ class BackTester {
             break;
           }
         }
-        if ((double.parse(normalStockList[operatingDay].getData(priceType)) - double.parse(normalStockList[i].getData(priceType))) < numberSTD * std) {
+        if ((double.parse(normalStockList[operatingDay].getData(priceType)) -
+                double.parse(normalStockList[i].getData(priceType))) <
+            numberSTD * std) {
           flag = false;
         }
         if (flag == true) {
-
           String buyPrice = normalStockList[operatingDay].getData(priceType);
           String comparePrice =
               normalStockList[operatingDay + 1].getData(priceType);
           String whetherValid = measure(buyPrice, comparePrice, userAction);
           String date = normalStockList[operatingDay].date;
-          result.add(resultItem(
+          result.add(ResultItem(
               firstPrice: buyPrice,
               secondPrice: comparePrice,
               whetherValid: whetherValid,
@@ -113,7 +115,10 @@ class BackTester {
             break;
           }
         }
-        if ((double.parse(normalStockList[i].getData(priceType)) - double.parse(normalStockList[operatingDay].getData(priceType))) < numberSTD * std) {
+        if ((double.parse(normalStockList[i].getData(priceType)) -
+                double.parse(
+                    normalStockList[operatingDay].getData(priceType))) <
+            numberSTD * std) {
           flag = false;
         }
         if (flag == true) {
@@ -122,7 +127,7 @@ class BackTester {
               normalStockList[operatingDay + 1].getData(priceType);
           String whetherValid = measure(buyPrice, comparePrice, userAction);
           String date = normalStockList[operatingDay].date;
-          result.add(resultItem(
+          result.add(ResultItem(
               firstPrice: buyPrice,
               secondPrice: comparePrice,
               whetherValid: whetherValid,
@@ -135,8 +140,6 @@ class BackTester {
 
     return result;
   }
-
-
 
   String measure(String firstPrice, String secondPrice, UserAction userAction) {
     if (userAction == UserAction.buy) {

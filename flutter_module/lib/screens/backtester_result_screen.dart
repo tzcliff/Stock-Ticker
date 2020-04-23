@@ -7,58 +7,74 @@ import '../constants.dart';
 class ResultScreen extends StatelessWidget {
   final List<Widget> result;
   final UserAction userAction;
+  final String modelName;
+  final String symbol;
 
-  ResultScreen({@required this.result, @required this.userAction});
+  ResultScreen(
+      {@required this.result,
+      @required this.userAction,
+      this.modelName,
+      this.symbol});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(children: <Widget>[
-        Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              Center(child: Text('Back Testing Result', style: kMainTextStyle))
-            ],
+    return Scaffold(
+        body: SafeArea(
+      child: Container(
+        child: Column(children: <Widget>[
+          Align(
+            alignment: Alignment.topLeft,
+            child: FlatButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Icon(
+                Icons.clear,
+                size: 30,
+              ),
+            ),
           ),
-        ),
-        Center(child: Text('User Action: ' + userAction.toString().split('.').last, style: kMainTextStyle)),
 
-        Expanded(
-          child: ListView(
-            children: result,
-          )
-        )
-
-        /*Expanded(
-          child: ListView.builder(
-
-            itemCount: result.length,
-            itemBuilder: (context, index) {
-              final dynamic date = result[index];
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5),
-                child: Material(
-                  color: Colors.tealAccent.shade400,
-                  elevation: 5,
-                  child: Padding(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(
-                          date.toString(),
-                          style: kPriceTextStyle,
-                        ),
-                      ],
-                    ),
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  ),
+          Expanded(
+            flex: 2,
+            child: Container(
+                child: Column(
+              children: <Widget>[
+                Text(
+                  this.symbol,
+                  style: kMainTextStyle,
                 ),
-              );
-            },
+                Text(
+                  this.modelName,
+                  style: kPriceTextStyle,
+                ),
+              ],
+            )),
           ),
-        ),*/
-      ]),
-    );
+          Expanded(
+            flex: 1,
+            child: Container(
+              margin: EdgeInsets.only(left: 10),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  "Model Trading(${userAction.toString().split('.').last}) - Past 20 years:",
+                  style: kPriceTextStyle,
+                ),
+              ),
+            ),
+          ),
+          // Center(
+          //     child: Text(
+          //         'User Action: ' + userAction.toString().split('.').last,
+          //         style: kMainTextStyle)),
+          Expanded(
+              flex: 4,
+              child: ListView(
+                children: result,
+              ))
+        ]),
+      ),
+    ));
   }
 }
