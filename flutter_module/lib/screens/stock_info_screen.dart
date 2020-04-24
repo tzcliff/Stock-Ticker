@@ -17,7 +17,6 @@ import 'package:provider/provider.dart';
 
 List<Stock> globalStockList;
 
-
 class StockInfoScreen extends StatefulWidget {
   static String id = 'stock_info_screen';
   final dynamic stockData;
@@ -55,7 +54,6 @@ class _StockInfoScreenState extends State<StockInfoScreen> {
     //print("futureStock: " + futureStock.toString());
     uid = HomeScreen.uid;
   }
-
 
   void updateUI(dynamic stockData) {
     setState(() {
@@ -106,17 +104,16 @@ class _StockInfoScreenState extends State<StockInfoScreen> {
               ),
               FlatButton(
                   onPressed: () {
-                    print('jiang');
                     showModalBottomSheet(
-                        context: context,
-                        builder: (context) => SingleChildScrollView(
-                          child: Container(
-                            padding: EdgeInsets.only(
+                      context: context,
+                      builder: (context) => SingleChildScrollView(
+                        child: Container(
+                          padding: EdgeInsets.only(
                               bottom: MediaQuery.of(context).viewInsets.bottom),
-                            child: ChooseModelScreen(symbol:symbol),
-                            ),
-                          ),
-                        );
+                          child: ChooseModelScreen(symbol: symbol),
+                        ),
+                      ),
+                    );
                   },
                   child: Text(
                     'Apply Model',

@@ -4,7 +4,7 @@ import 'package:fluttermodule/constants.dart';
 
 class IndexItem extends StatelessWidget {
   final String symbol;
-  final double price;
+  final String price;
 
   const IndexItem({
     @required this.symbol,

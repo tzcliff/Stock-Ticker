@@ -3,6 +3,7 @@ import 'package:fluttermodule/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttermodule/screens/welcome_screen.dart';
 import 'home_screen.dart';
+import 'package:fluttermodule/components/rounded_button.dart';
 
 class SettingScreen extends StatefulWidget {
   @override
@@ -31,17 +32,13 @@ class _SettingScreenState extends State<SettingScreen> {
             Text('${HomeScreen.email}', style: kPriceTextStyle),
           ],
         ),
-        RaisedButton(
-          elevation: 5,
-          onPressed: () {
-            _auth.signOut();
-            Navigator.pushNamed(context, WelcomeScreen.id);
-          },
-          child: Text(
-            'Sign Out',
-            style: kPriceTextStyle.copyWith(color: Colors.red),
-          ),
-        ),
+        RoundedButton(
+            color: Colors.tealAccent.shade400,
+            onPressed: () {
+              _auth.signOut();
+              Navigator.pushNamed(context, WelcomeScreen.id);
+            },
+            title: 'Sign Out'),
       ],
     );
   }
