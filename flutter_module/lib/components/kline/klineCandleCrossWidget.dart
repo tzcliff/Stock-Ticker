@@ -121,7 +121,7 @@ class _KlineCandleCrossPainter extends CustomPainter {
       offset5,
       offset1
     ];
-    // 填充多边形颜色
+
     Paint polygonPainter = Paint()
       ..color = kBackgroundColor
       ..style = PaintingStyle.fill
@@ -130,9 +130,7 @@ class _KlineCandleCrossPainter extends CustomPainter {
     path.addPolygon(points, false);
     canvas.drawPath(path, polygonPainter);
 
-    // 绘制多边形
     canvas.drawPoints(PointMode.polygon, points, paintH);
-    // 绘制文字
     Offset of = Offset(
         closeTextOriginX, originY + klineModel.offset.dy - closePainter.height / 2);
     closePainter.paint(canvas, of);

@@ -43,7 +43,7 @@ class _KLineScreen extends State<KLineScreen> {
                           }
                         },
                       ),
-                      middle: Text(widget.symbol, style: TextStyle(color: Colors.white),),
+                      middle: Text(widget.symbol, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'Baloo2', color: Colors.white),),
                       backgroundColor: kBackgroundColor,
                     ),
                     body: Container(
@@ -63,6 +63,24 @@ class _KLineScreen extends State<KLineScreen> {
 
 Future<StockList> fetchStock(String period, String symbol) async {
   // a future is a Dart class for async operations, a future represents a potential value OR error that will be available at some future time
+  if (period == '1day') {
+    NetworkService networkService = NetworkService(
+        'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' +
+            symbol +
+            '&apikey=' +
+            kAlphaStockAPIKey);
+
+    var data = await networkService.getDataListFormat();
+    if (data != null) {
+      // double check the data one last time
+      return data;
+      // return StockList.fromJson(json.decode(response.body));
+    } else {
+      // If the data isn't there for some reason (i.e. not a 200 response code)
+      throw Exception('Failed to load stock');
+    }
+  }
+
   var url = 'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=' +
       symbol +
       '&interval=' +
@@ -92,7 +110,7 @@ class KlinePageBloc extends KlineBloc {
 
   @override
   void initData() {
-    _getData('60min', symbol);
+    _getData('1day', symbol);
     super.initData();
   }
 

@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 
 const double kPeriodHeight = 40;
 const double kPeriodAspectRatio = 375 / kPeriodHeight;
-const String kDefaultPeriod = '60min';
-const List<String> kPeriodList = ['1min', '5min', '15min', '30min', '60min'];
-const kDefaultPeriodIndex = 4;
+const String kDefaultPeriod = '1day';
+const List<String> kPeriodList = ['1min', '5min', '15min', '30min', '60min', '1day'];
+const kDefaultPeriodIndex = 5;
 
 const double kCandlestickWidth = 7.0;
 const double kWickWidth = 1.0;
 const double kCandlestickGap = 2.0;
 const double kTopMargin = 30.0;
-const Color kDecreaseColor = Color(0xffff4400);
+const Color kDecreaseColor = Colors.red;
 const Color kIncreaseColor = Colors.green;
-const Color kBackgroundColor = Color(0xff111825);
+const Color kBackgroundColor = Color(0xff2E2E2E);
 const double kCandleAspectRatio = 1;
 const Color kCandleTextColor = Colors.white;
 const double kCandleFontSize = 9;
@@ -23,8 +23,8 @@ const double kColumnarGap = kCandlestickGap;
 const double kColumnarTopMargin = 32.0;
 const double kVolumeAspectRatio = 1/0.25;
 
-const Color kGridLineColor = Color(0xff263347);
-const Color kGridTextColor = Color(0xff7287A5);
+const Color kGridLineColor = Colors.grey;
+const Color kGridTextColor = Colors.white;
 const double kGridLineWidth = 0.5;
 const double kGridPriceFontSize = 10;
 const int kGridRowCount = 4;
@@ -46,9 +46,9 @@ const double kCrossVLineWidth = kCandlestickGap;
 const double kCrossPointRadius = 2.0;
 const double kCrossTopMargin = 0;
 
-const Color kCandleInfoBgColor = Color(0xff0C1522);
-const Color kCandleInfoBorderColor = Color(0xff7286A4);
-const Color kCandleInfoTextColor = Color(0xffCFD3E7);
+const Color kCandleInfoBgColor = Color(0xff2E2E2E);
+const Color kCandleInfoBorderColor = Colors.grey;
+const Color kCandleInfoTextColor = Colors.white;
 const Color kCandleInfoDecreaseColor = kDecreaseColor;
 const Color kCandleInfoIncreaseColor = kIncreaseColor;
 const double kCandleInfoLeftFontSize = 10;
