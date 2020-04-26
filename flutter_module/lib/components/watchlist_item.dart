@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:fluttermodule/constants.dart';
@@ -8,7 +9,7 @@ class WatchListItem extends StatelessWidget {
   final String symbol;
   final double price;
 
-  const WatchListItem({
+  WatchListItem({
     Key key,
     @required this.symbol,
     @required this.price,
@@ -20,7 +21,7 @@ class WatchListItem extends StatelessWidget {
       onTap: () async {
         StockService stockService = StockService();
         print(symbol);
-        var stockData = await stockService.getStockBySymbol(symbol);
+        var stockData = await stockService.getStockQuoteBySymbol(symbol);
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return StockInfoScreen(
             stockData: stockData,
@@ -30,6 +31,7 @@ class WatchListItem extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 5),
         child: Material(
+          color: Colors.tealAccent.shade400,
           elevation: 5,
           child: Padding(
             child: Row(

@@ -7,8 +7,6 @@ const kPriceTextStyle =
 
 const kBottomBarTextStyle = TextStyle(fontFamily: 'Baloo2');
 
-const String kAlphaStockAPIKey = 'XYII374F30NG3EVQ';
-
 const kSearchStockTextFieldInputDecoration = InputDecoration(
   filled: true,
   fillColor: Colors.white,
@@ -31,9 +29,35 @@ const kSearchButtonTextStyle = TextStyle(
   fontFamily: 'Baloo2',
 );
 
+const kConditionalDropdownTextStyle =
+    TextStyle(fontFamily: 'Baloo2', fontSize: 15);
+
+const kModelPageTextStyle = TextStyle(
+  fontSize: 18,
+  fontWeight: FontWeight.bold,
+  fontFamily: 'Baloo2',
+);
+
 const kTextFieldDecoration = InputDecoration(
   hintText: '',
   contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+  border: OutlineInputBorder(
+    borderRadius: BorderRadius.all(Radius.circular(32.0)),
+  ),
+  enabledBorder: OutlineInputBorder(
+    borderSide: BorderSide(color: Colors.tealAccent, width: 1.0),
+    borderRadius: BorderRadius.all(Radius.circular(32.0)),
+  ),
+  focusedBorder: OutlineInputBorder(
+    borderSide: BorderSide(color: Colors.tealAccent, width: 2.0),
+    borderRadius: BorderRadius.all(Radius.circular(32.0)),
+  ),
+);
+
+const kCreateModelTextFieldDecoration = InputDecoration(
+  hintText: '',
+  hintStyle: kModelPageTextStyle,
+  contentPadding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
   border: OutlineInputBorder(
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
