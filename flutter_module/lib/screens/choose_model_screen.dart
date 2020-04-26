@@ -46,9 +46,7 @@ class _ChooseModelScreenState extends State<ChooseModelScreen> {
                       symbol: widget.symbol,
                     );
                   }));
-                } catch (e) {
-                  print(e);
-                }
+                } catch (e) {}
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 5),
