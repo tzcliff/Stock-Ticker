@@ -4,7 +4,10 @@ import 'dart:convert';
 import 'network_service.dart';
 import 'package:fluttermodule/api_keys.dart';
 import 'package:fluttermodule/models/stock.dart';
+<<<<<<< HEAD
 import 'package:http/http.dart' as http;
+=======
+>>>>>>> master
 
 const String alphaStockApiURL = 'https://www.alphavantage.co/query';
 
@@ -74,6 +77,7 @@ class StockService {
       throw Exception('Failed to load stock');
     }
   }
+<<<<<<< HEAD
 
   Future<StockList> fetchStockPeriod(String symbol, String period) async {
     // a future is a Dart class for async operations, a future represents a potential value OR error that will be available at some future time
@@ -93,4 +97,6 @@ class StockService {
       return null;
     }
   }
+=======
+>>>>>>> master
 }

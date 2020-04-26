@@ -3,7 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:fluttermodule/constants.dart';
 import 'package:fluttermodule/screens/choose_model_screen.dart';
 import 'package:fluttermodule/screens/home_screen.dart';
+<<<<<<< HEAD
 import 'package:fluttermodule/screens/kline_screen.dart';
+=======
+>>>>>>> master
 import 'package:fluttermodule/services/stock_service.dart';
 import 'package:fluttermodule/components/price_panel.dart';
 import 'package:fluttermodule/models/stock.dart';
@@ -28,8 +31,12 @@ class StockInfoScreen extends StatefulWidget {
 }
 
 class _StockInfoScreenState extends State<StockInfoScreen> {
+<<<<<<< HEAD
   String dropdownValue = 'High';
   String intervalValue = '1day';
+=======
+  String dropdownValue = 'High prices';
+>>>>>>> master
   String uid;
 
   StockService stockService = StockService();
@@ -49,7 +56,12 @@ class _StockInfoScreenState extends State<StockInfoScreen> {
     updateUI(widget.stockData);
     super.initState();
     StockService stockService = new StockService();
+<<<<<<< HEAD
     futureStock = stockService.fetchStock(symbol);// populate the object with data from the API
+=======
+    futureStock = stockService
+        .fetchStock(symbol); // populate the object with data from the API
+>>>>>>> master
 
     //print("futureStock: " + futureStock.toString());
     uid = HomeScreen.uid;
@@ -152,7 +164,11 @@ class _StockInfoScreenState extends State<StockInfoScreen> {
                       // Sets 15 logical pixels as margin for all the 4 sides.
                       margin: EdgeInsets.all(15),
                       title: ChartTitle(
+<<<<<<< HEAD
                           text: globalDropdownValue + ' for ' + symbol + ' (' + globalIntervalValue + ')'),
+=======
+                          text: globalDropdownValue + ' for ' + symbol),
+>>>>>>> master
                       series: <LineSeries<Stock, String>>[
                         LineSeries<Stock, String>(
                             dataSource: globalStockList,
@@ -160,11 +176,20 @@ class _StockInfoScreenState extends State<StockInfoScreen> {
                             yValueMapper: (Stock stock, _) {
                               if (globalDropdownValue == 'Open') {
                                 return double.parse(stock.open);
+<<<<<<< HEAD
                               } else if (globalDropdownValue == 'Close') {
                                 return double.parse(stock.close);
                               } else if (globalDropdownValue == 'High') {
                                 return double.parse(stock.high);
                               } else if (globalDropdownValue == 'Low') {
+=======
+                              } else if (globalDropdownValue ==
+                                  'Close prices') {
+                                return double.parse(stock.close);
+                              } else if (globalDropdownValue == 'High prices') {
+                                return double.parse(stock.high);
+                              } else if (globalDropdownValue == 'Low prices') {
+>>>>>>> master
                                 return double.parse(stock.low);
                               } else {
                                 return double.parse(stock.volume);
@@ -209,10 +234,17 @@ class _StockInfoScreenState extends State<StockInfoScreen> {
                   });
                 },
                 items: <String>[
+<<<<<<< HEAD
                   'High',
                   'Low',
                   'Open',
                   'Close',
+=======
+                  'High prices',
+                  'Low prices',
+                  'Open prices',
+                  'Close prices',
+>>>>>>> master
                   'Volume'
                 ].map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
