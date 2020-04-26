@@ -49,7 +49,7 @@ packages:
       name: cloud_firestore
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.13.4+2"
+    version: "0.13.5"
   cloud_firestore_platform_interface:
     dependency: transitive
     description:
@@ -98,7 +98,7 @@ packages:
       name: firebase
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "7.2.1"
+    version: "7.3.0"
   firebase_auth:
     dependency: "direct main"
     description:
@@ -183,21 +183,21 @@ packages:
       name: google_sign_in
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.4.0"
+    version: "4.4.4"
   google_sign_in_platform_interface:
     dependency: transitive
     description:
       name: google_sign_in_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.0"
+    version: "1.1.1"
   google_sign_in_web:
     dependency: transitive
     description:
       name: google_sign_in_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.8.4"
+    version: "0.9.1"
   http:
     dependency: "direct main"
     description:
@@ -295,7 +295,7 @@ packages:
       name: provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.4"
+    version: "4.0.5"
   quiver:
     dependency: transitive
     description:
@@ -303,6 +303,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.5"
+  rxdart:
+    dependency: "direct main"
+    description:
+      name: rxdart
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.23.1"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -342,14 +349,14 @@ packages:
       name: syncfusion_flutter_charts
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "18.1.42"
+    version: "18.1.45"
   syncfusion_flutter_core:
     dependency: transitive
     description:
       name: syncfusion_flutter_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "18.1.42"
+    version: "18.1.45"
   term_glyph:
     dependency: transitive
     description:
@@ -377,14 +384,14 @@ packages:
       name: url_launcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.4.2"
+    version: "5.4.5"
   url_launcher_macos:
     dependency: transitive
     description:
       name: url_launcher_macos
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.1+4"
+    version: "0.0.1+5"
   url_launcher_platform_interface:
     dependency: transitive
     description:
@@ -398,7 +405,7 @@ packages:
       name: url_launcher_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.1+1"
+    version: "0.1.1+2"
   utf:
     dependency: transitive
     description:
@@ -421,5 +428,5 @@ packages:
     source: hosted
     version: "3.5.0"
 sdks:
-  dart: ">=2.7.0-dev <3.0.0"
-  flutter: ">=1.12.13+hotfix.4 <2.0.0"
+  dart: ">=2.7.0 <3.0.0"
+  flutter: ">=1.12.13+hotfix.5 <2.0.0"

@@ -87,6 +87,36 @@ class StockList {
     );
   }
 
+<<<<<<< HEAD
+  factory StockList.fromJsonWithPeriod(Map<String, dynamic> json, String period) {
+    // parse the json into data we can use it
+    if (json['Time Series (' + period + ')'] == null) {
+      throw Exception(
+          "An error has occured. Are you sure you entered a valid stock ticker?");
+    }
+    int size = json['Time Series (' + period + ')'].keys.toList().length;
+
+    List<Stock> stockList = [];
+
+    for (int i = 0; i < size; i++) {
+      stockList.add(new Stock(
+        date: json['Time Series (' + period + ')'].keys.toList()[i],
+        open: json['Time Series (' + period + ')'].values.toList()[i]['1. open'],
+        high: json['Time Series (' + period + ')'].values.toList()[i]['2. high'],
+        low: json['Time Series (' + period + ')'].values.toList()[i]['3. low'],
+        close: json['Time Series (' + period + ')'].values.toList()[i]['4. close'],
+        volume: json['Time Series (' + period + ')'].values.toList()[i]['5. volume'],
+      ));
+    }
+
+
+    return StockList(
+      stockList,
+    );
+  }
+
+=======
+>>>>>>> master
 //  @override
 //  String toString() {
 //    String ret = "";
