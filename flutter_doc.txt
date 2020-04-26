@@ -1,3 +1,0 @@
-Setup flutter as a module:
-
-https://flutter.dev/docs/development/add-to-app/android/project-setup
