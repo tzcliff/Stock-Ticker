@@ -87,7 +87,6 @@ class StockList {
     );
   }
 
-<<<<<<< HEAD
   factory StockList.fromJsonWithPeriod(Map<String, dynamic> json, String period) {
     // parse the json into data we can use it
     if (json['Time Series (' + period + ')'] == null) {
@@ -115,8 +114,6 @@ class StockList {
     );
   }
 
-=======
->>>>>>> master
 //  @override
 //  String toString() {
 //    String ret = "";
