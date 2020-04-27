@@ -17,3 +17,4 @@ If you encounter any trouble with the app accessing Firebase or other services, 
 Please contact one of the team members if you need a copy of api_keys.dart or the build files. 
 
 <a href="privacy.html">Privacy Policy</a>
+<a href="term.html">Terms&Conditions</a>
