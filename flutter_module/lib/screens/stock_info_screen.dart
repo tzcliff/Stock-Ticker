@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:fluttermodule/constants.dart';
 import 'package:fluttermodule/screens/choose_model_screen.dart';
 import 'package:fluttermodule/screens/home_screen.dart';
+import 'package:fluttermodule/screens/kline_screen.dart';
 import 'package:fluttermodule/services/stock_service.dart';
 import 'package:fluttermodule/components/price_panel.dart';
 import 'package:fluttermodule/models/stock.dart';
@@ -26,7 +28,8 @@ class StockInfoScreen extends StatefulWidget {
 }
 
 class _StockInfoScreenState extends State<StockInfoScreen> {
-  String dropdownValue = 'High prices';
+  String dropdownValue = 'High';
+  String intervalValue = '1day';
   String uid;
 
   StockService stockService = StockService();
@@ -46,8 +49,7 @@ class _StockInfoScreenState extends State<StockInfoScreen> {
     updateUI(widget.stockData);
     super.initState();
     StockService stockService = new StockService();
-    futureStock = stockService
-        .fetchStock(symbol); // populate the object with data from the API
+    futureStock = stockService.fetchStock(symbol);// populate the object with data from the API
 
     //print("futureStock: " + futureStock.toString());
     uid = HomeScreen.uid;
@@ -80,7 +82,8 @@ class _StockInfoScreenState extends State<StockInfoScreen> {
     });
   }
 
-  String globalDropdownValue = 'High prices';
+  String globalDropdownValue = 'High';
+  String globalIntervalValue = '1day';
 
   @override
   Widget build(BuildContext context) {
@@ -149,20 +152,19 @@ class _StockInfoScreenState extends State<StockInfoScreen> {
                       // Sets 15 logical pixels as margin for all the 4 sides.
                       margin: EdgeInsets.all(15),
                       title: ChartTitle(
-                          text: globalDropdownValue + ' for ' + symbol),
+                          text: globalDropdownValue + ' for ' + symbol + ' (' + globalIntervalValue + ')'),
                       series: <LineSeries<Stock, String>>[
                         LineSeries<Stock, String>(
                             dataSource: globalStockList,
                             xValueMapper: (Stock stock, _) => stock.date,
                             yValueMapper: (Stock stock, _) {
-                              if (globalDropdownValue == 'Open prices') {
+                              if (globalDropdownValue == 'Open') {
                                 return double.parse(stock.open);
-                              } else if (globalDropdownValue ==
-                                  'Close prices') {
+                              } else if (globalDropdownValue == 'Close') {
                                 return double.parse(stock.close);
-                              } else if (globalDropdownValue == 'High prices') {
+                              } else if (globalDropdownValue == 'High') {
                                 return double.parse(stock.high);
-                              } else if (globalDropdownValue == 'Low prices') {
+                              } else if (globalDropdownValue == 'Low') {
                                 return double.parse(stock.low);
                               } else {
                                 return double.parse(stock.volume);
@@ -185,9 +187,10 @@ class _StockInfoScreenState extends State<StockInfoScreen> {
               // ),
             ),
           ),
-          Expanded(
-            child: Center(
-              child: DropdownButton<String>(
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              DropdownButton<String>(
                 value: dropdownValue,
                 icon: Icon(Icons.arrow_downward),
                 style: TextStyle(
@@ -206,10 +209,10 @@ class _StockInfoScreenState extends State<StockInfoScreen> {
                   });
                 },
                 items: <String>[
-                  'High prices',
-                  'Low prices',
-                  'Open prices',
-                  'Close prices',
+                  'High',
+                  'Low',
+                  'Open',
+                  'Close',
                   'Volume'
                 ].map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
@@ -218,7 +221,59 @@ class _StockInfoScreenState extends State<StockInfoScreen> {
                   );
                 }).toList(),
               ),
-            ),
+              FlatButton(
+                onPressed: () {
+                  Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) {
+                      return KLineScreen(
+                        symbol: symbol,
+                      );
+                    }));
+                },
+                child: Text(
+                  'K Line',
+                  style: kPriceTextStyle,
+                )
+              ),
+              DropdownButton<String>(
+                value: intervalValue,
+                icon: Icon(Icons.arrow_downward),
+                style: TextStyle(
+                  color: Colors.white,
+                  decoration: TextDecoration.none,
+                  fontSize: 20.0,
+                ),
+                underline: Container(
+                  height: 2,
+                  color: Colors.white,
+                ),
+                onChanged: (String newValue) {
+                  setState(() {
+                    intervalValue = newValue;
+                    globalIntervalValue = newValue;
+                    if (globalIntervalValue == '1day') {
+                      futureStock = stockService.fetchStock(symbol);
+                    }
+                    else {
+                      futureStock = stockService.fetchStockPeriod(symbol, globalIntervalValue);
+                    }
+                  });
+                },
+                items: <String>[
+                  '1min',
+                  '5min',
+                  '15min',
+                  '30min',
+                  '60min',
+                  '1day',
+                ].map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              ),
+            ],
           ),
           Expanded(
             flex: 3,

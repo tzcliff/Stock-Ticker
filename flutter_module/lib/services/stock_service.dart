@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'network_service.dart';
 import 'package:fluttermodule/api_keys.dart';
 import 'package:fluttermodule/models/stock.dart';
+import 'package:http/http.dart' as http;
 
 const String alphaStockApiURL = 'https://www.alphavantage.co/query';
 
@@ -71,6 +72,25 @@ class StockService {
     } else {
       // If the data isn't there for some reason (i.e. not a 200 response code)
       throw Exception('Failed to load stock');
+    }
+  }
+
+  Future<StockList> fetchStockPeriod(String symbol, String period) async {
+    // a future is a Dart class for async operations, a future represents a potential value OR error that will be available at some future time
+    var url = 'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=' +
+        symbol +
+        '&interval=' +
+        period +
+        '&apikey=' +
+        kAlphaStockAPIKey;
+
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
+      return StockList.fromJsonWithPeriod(json.decode(response.body), period);
+    }
+    else {
+      print(response.statusCode);
+      return null;
     }
   }
 }
