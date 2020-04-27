@@ -1,4 +1,4 @@
-# CS591_Team_Green_Project
+# Stock Ticker
 CS591 Mobile Development Final Project.
 
 Team Members:
